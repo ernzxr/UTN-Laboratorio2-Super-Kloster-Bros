@@ -17,8 +17,8 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
     window.setFramerateLimit(60);
-
-    b2Vec2 gravity(0.0f, 9.81f);
+    
+    b2Vec2 gravity(0.0f, 800.0f);
     b2World world(gravity);
 
     Player player(world, {100, 492});

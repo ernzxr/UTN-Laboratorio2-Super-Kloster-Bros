@@ -20,9 +20,9 @@ private:
     bool _didJump = false;
 
     b2Vec2 _velocity{0.0f , 0.0f};
+    float _moveSpeed = 10.0f;
+
     float _stateTime = 0.0f;
-    float _moveSpeed = 10.0f;;
-    float _jumpImpulse = -20.0f;
 public:
     Player(b2World& world, b2Vec2 position);
     void update();
