@@ -7,7 +7,7 @@ Player::Player(b2World& world, b2Vec2 position)
     b2BodyDef bodyDef;
     bodyDef.position.Set((position.x + _width / 2.0f) / pixels_per_meter, (position.y + _height / 2.0f) / pixels_per_meter);
     bodyDef.type = b2_dynamicBody;
-    bodyDef.fixedRotation = false;
+    bodyDef.fixedRotation = true;
 
     // Create Body
     _body = world.CreateBody(&bodyDef);
@@ -34,7 +34,9 @@ Player::Player(b2World& world, b2Vec2 position)
 }
 
 void Player::update()
-{
+{   
+    _velocity.x = 0.0f;
+    
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         _velocity.x = _moveSpeed;
     }
@@ -47,7 +49,7 @@ void Player::update()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
             _didJump = true;
             _isJumping = true;
-            _velocity.y += -30.0f;
+            _velocity.y += -25.0f;
         }
     }
 
@@ -72,4 +74,12 @@ void Player::update()
     _velocity.x = 0.0f;
 
     std::cout << "{" << _velocity.x << ", " << _velocity.y << "}" << std::endl;
+}
+
+void Player::render(sf::RenderWindow& window) {
+    window.draw(*_sprite);
+}
+sf::Vector2f Player::getPosition() {
+    b2Vec2 pos = _body->GetPosition();
+    return sf::Vector2f(pos.x * pixels_per_meter, pos.y * pixels_per_meter);
 }

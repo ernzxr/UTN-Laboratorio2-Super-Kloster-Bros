@@ -26,5 +26,7 @@ private:
 public:
     Player(b2World& world, b2Vec2 position);
     void update();
+    void render(sf::RenderWindow& window);
+    sf::Vector2f getPosition();
 };
 
