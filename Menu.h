@@ -10,6 +10,6 @@ class Menu
 public:
 	void menu();
 	void Jugar();
-private:
+
 };
 
