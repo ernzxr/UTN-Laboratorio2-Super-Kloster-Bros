@@ -27,7 +27,6 @@ struct FixtureData {
 
 };
 
-
 class GlobalContactListener : public b2ContactListener
 {
 public:

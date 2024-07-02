@@ -1,5 +1,4 @@
 #include "Player.h"
-#include <iostream>
 
 Player::Player(b2World& world, b2Vec2 position)
 {
@@ -33,7 +32,7 @@ Player::Player(b2World& world, b2Vec2 position)
     _body->CreateFixture(&fixtureDef);
 
     // Create SFML Sprite
-    _texture.loadFromFile("SpriteSheetTimesTwo.png");
+    _texture.loadFromFile("assets/SpriteSheetTimesTwo.png");
     _sprite = new sf::Sprite();
     _sprite->setTexture(_texture);
     _sprite->setTextureRect({ 64, 0 , 32, 64 });
@@ -136,13 +135,14 @@ void Player::update()
     _body->SetLinearVelocity(_velocity);
 
     _velocity.x = 0.0f;
-
-    std::cout << _onGround << std::endl;
 }
 
 void Player::render(sf::RenderWindow& window) {
+    _sprite->setPosition(_body->GetPosition().x * pixels_per_meter, _body->GetPosition().y * pixels_per_meter);
+    _sprite->setRotation(_body->GetAngle() * deg_per_rad);
     window.draw(*_sprite);
 }
+
 sf::Vector2f Player::getPosition() {
     b2Vec2 pos = _body->GetPosition();
     return sf::Vector2f(pos.x * pixels_per_meter, pos.y * pixels_per_meter);
