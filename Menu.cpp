@@ -9,7 +9,7 @@ void Menu::Jugar() {
 	window.setFramerateLimit(60);
 
 
-	b2Vec2 gravity(0.0f, 800.0f);
+	b2Vec2 gravity(0.0f, 980.0f);
 	b2World world(gravity);
 	Player player(world, { 400,500 });
 	Scene scene(world, &player);

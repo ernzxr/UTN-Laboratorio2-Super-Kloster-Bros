@@ -14,13 +14,25 @@ Scene::Scene(b2World& world, Player* player)
 	
 }
 
+void Scene::displayWorld(sf::RenderWindow& render) {
+	for (b2Body* body = _world.GetBodyList(); body != 0; body = body->GetNext()) {
+		sf::Sprite* sprite = reinterpret_cast<sf::Sprite*>(body->GetUserData().pointer);
+		sprite->setPosition(body->GetPosition().x * pixels_per_meter, body->GetPosition().y * pixels_per_meter);
+		sprite->setRotation(body->GetAngle() * deg_per_rad);
+		render.draw(*sprite);
+
+	}
+}
 
 void Scene::update(){
 	if (paused) {
 		return;
 	}
+	//NEW
+	_player->cmd();
 	_player->update();
 	_world.Step(1.0f / 60, int32(10), int32(8));
+	_world.SetContactListener(new GlobalContactListener());
 	}
 sf::Vector2f Scene::getCameraPosition() {
 
@@ -58,15 +70,6 @@ void Scene::render(sf::RenderWindow& window) {
 	window.display();
 }
 
-void Scene::displayWorld(sf::RenderWindow& render) {
-	for (b2Body* body = _world.GetBodyList(); body != 0; body = body->GetNext()) {
-		sf::Sprite* sprite = reinterpret_cast<sf::Sprite*>(body->GetUserData().pointer);
-		sprite->setPosition(body->GetPosition().x * pixels_per_meter, body->GetPosition().y * pixels_per_meter);
-		sprite->setRotation(body->GetAngle() * deg_per_rad);
-		render.draw(*sprite);
-
-	}
-}
 void Scene::handleInput(sf::Event event) {
 	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
 		paused = !paused;
