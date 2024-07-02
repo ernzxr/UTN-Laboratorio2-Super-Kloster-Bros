@@ -12,9 +12,13 @@ private:
     // Temporal
     sf::RectangleShape* _shape;
     sf::RectangleShape* _structureShape;
+    sf::RectangleShape* _structureShape2;
+    sf::RectangleShape* _structureShape3;
 
     b2Body* _body;
     b2Body* _structure;
+    b2Body* _structure2;
+    b2Body* _structure3;
 public:
     TiledMap(b2World& world);
 
