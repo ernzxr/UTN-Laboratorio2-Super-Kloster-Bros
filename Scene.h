@@ -3,6 +3,7 @@
 #include "TiledMap.h"
 #include "Player.h"
 #include "constants.h"
+#include "Enemy.h"
 
 class Scene
 {
@@ -10,6 +11,7 @@ private:
 	b2World& _world;
 	Player* _player;
 	TiledMap* _tiledMap;
+	Enemy* _enemy;
 
 	// Fondo del juego
 	sf::Texture _bgTexture;

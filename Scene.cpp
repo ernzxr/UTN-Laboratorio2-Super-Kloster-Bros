@@ -4,6 +4,7 @@
 Scene::Scene(b2World& world) : _world(world)  {
 	_tiledMap = new TiledMap(_world);
 	_player = new Player(_world, { 400, 500 });
+	_enemy = new Enemy(_world, { 600, 500 });
 
 	_bgTexture.loadFromFile("assets/bg.jpg");
 	_bgSprite.setTexture(_bgTexture);
@@ -20,6 +21,8 @@ Scene::Scene(b2World& world) : _world(world)  {
 void Scene::update() {
 	_player->cmd();
 	_player->update();
+	_enemy->update();
+
 	_world.SetContactListener(new GlobalContactListener());
 }
 
@@ -45,6 +48,9 @@ void Scene::render(sf::RenderWindow& window, bool _paused, int _pauseMenuSelecti
 
 		// Draw the Player
 		_player->render(window);
+
+		//Draw the Enemy
+		_enemy->render(window);
 
 		// Draw the Map
 		_tiledMap->render(window);

@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Director.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GlobalContactListener.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TiledMap.cpp" />
@@ -151,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="constants.h" />
     <ClInclude Include="Director.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="GlobalContactListener.h" />
     <ClInclude Include="TiledMap.h" />
     <ClInclude Include="Menu.h" />

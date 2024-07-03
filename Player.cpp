@@ -37,8 +37,7 @@ Player::Player(b2World& world, b2Vec2 position)
     b2shape.SetAsBox(0.4f, 0.2f, b2Vec2(0.0f, 1.0f), 0.0f);
     fixtureDef.userData.pointer = (uintptr_t)&_fixtureData;
     fixtureDef.isSensor = true;
-    _body->CreateFixture(&fixtureDef);
-
+    _groundFixture = _body->CreateFixture(&fixtureDef);
 
     // Create SFML Sprite
     _texture.loadFromFile("assets/SpriteSheetTimesTwo.png");
@@ -80,10 +79,11 @@ void Player::cmd()
         }
     }
 
+    
     if (_didJump) {
         if (_velocity.y > -40.0f && _isJumping) {
             _velocity.y += -1.0f;
-            if (_velocity.y == -40.0f) {
+            if (_velocity.y <= -40.0f) {
                 _isJumping = false;
                 _isFalling = true;
                 isMoving = true;
@@ -98,7 +98,8 @@ void Player::cmd()
                 _isJumping = false;
                 _isFalling = false;
             }
-            else if (_onGround) {
+            /*
+            else if (_onRoof) {
                 _velocity.y = -5.0f;
                 _sprite->setTextureRect({ 64, 96, 32, 64 });
                 _didJump = false;
@@ -106,6 +107,7 @@ void Player::cmd()
                 _isFalling = false;
                 _onGround = false;
             }
+            */
         }
     }
 
@@ -144,7 +146,7 @@ void Player::update()
     _body->SetLinearVelocity(_velocity);
 
     _velocity.x = 0.0f;
-    std::cout << _onGround << std::endl;
+   
 }
 
 void Player::render(sf::RenderWindow& window) {
@@ -159,20 +161,37 @@ sf::Vector2f Player::getPosition() {
 }
 
 //NEW
-void Player::onBeginContact(b2Fixture* other)
+void Player::onBeginContact(b2Fixture* self, b2Fixture* other)
 {
     FixtureData* data = (FixtureData*)other->GetUserData().pointer;
 
-    if (data && data->type == FixtureDataType::GroundTile) {
+    if (!data) {
+        return;
+    }
+
+    if (_groundFixture == self && data->type == FixtureDataType::GroundTile) {
         _onGround = true;
     }
+    else if (_groundFixture == self && data->type == FixtureDataType::Enemy) {
+        Enemy* enemy = data->enemy;
+        _onGround = true;
+      
+    }
+    
 }
 
-void Player::onEndContact(b2Fixture* other)
+void Player::onEndContact(b2Fixture* self, b2Fixture* other)
 {
     FixtureData* data = (FixtureData*)other->GetUserData().pointer;
 
-    if (data && data->type == FixtureDataType::GroundTile) {
+    if (!data) {
+        return;
+    }
+
+    if (_groundFixture == self && data->type == FixtureDataType::GroundTile) {
+        _onGround = false;
+    }
+    else if (_groundFixture == self && data->type == FixtureDataType::Enemy) {
         _onGround = false;
     }
 

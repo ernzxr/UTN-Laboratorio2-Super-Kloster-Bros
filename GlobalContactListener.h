@@ -2,17 +2,18 @@
 #include <box2d/box2d.h>
 
 class Player;
+class Enemy;
 
 class ContactListener {
 public:
-	virtual void onBeginContact(b2Fixture* other) = 0;
-	virtual void onEndContact(b2Fixture* other) = 0;
+	virtual void onBeginContact(b2Fixture* self, b2Fixture* other) = 0;
+	virtual void onEndContact(b2Fixture* self, b2Fixture* other) = 0;
 };
 
 enum class FixtureDataType {
 	Player,
 	GroundTile,
-	SpikeTile,
+	Enemy,
 };
 
 struct FixtureData {
@@ -22,6 +23,7 @@ struct FixtureData {
 	union {
 		Player* player;
 		struct { int mapX, mapY; };
+		Enemy* enemy;
 	};
 
 

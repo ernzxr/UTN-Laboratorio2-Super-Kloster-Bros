@@ -96,6 +96,44 @@ void TiledMap::createStructure() {
 
 	// ESTRUCTURA 3 DE EJEMPLO
 
+	b2Vec2 position3 = b2Vec2(900.0f, 436.0f);
+
+	// Define Body
+	b2BodyDef bodyDef3;
+	bodyDef3.position.Set((position3.x + _width2 / 2.0f) / pixels_per_meter, (position3.y + _height2 / 2.0f) / pixels_per_meter);
+	bodyDef3.type = b2_staticBody;
+
+	// Create Body
+	_structure3 = _world.CreateBody(&bodyDef3);
+
+	// Create Shape
+	b2PolygonShape b2shape3;
+	b2shape3.SetAsBox(_width2 / 2.0f / pixels_per_meter, _height2 / 2.0f / pixels_per_meter);
+
+	//NEW
+	FixtureData* fixtureData3 = new FixtureData();
+	fixtureData3->type = FixtureDataType::GroundTile;
+	fixtureData3->mapX = position3.x;
+	fixtureData3->mapY = position3.y;
+
+	// Create Fixture
+	b2FixtureDef fixtureDef3;
+	fixtureDef3.userData.pointer = (uintptr_t)fixtureData3;
+
+	fixtureDef3.shape = &b2shape3;
+	fixtureDef3.density = 0.0f;
+	fixtureDef3.friction = 0.0f;
+
+	// Attach Shape to Body
+	_structure3->CreateFixture(&fixtureDef3);
+
+	_structureShape3 = new sf::RectangleShape(sf::Vector2f(_width2, _height2));
+	_structureShape3->setFillColor(sf::Color::Red);
+	_structureShape3->setOrigin(_structureShape3->getGlobalBounds().width / 2.0f, _structureShape3->getGlobalBounds().height / 2.0f);
+	_structureShape3->setScale(1, 1);
+
+	_structure3->GetUserData().pointer = reinterpret_cast<uintptr_t>(_structureShape3);
+
 
 
 
@@ -159,5 +197,9 @@ void TiledMap::render(sf::RenderWindow& window)
 	_structureShape2->setPosition(_structure2->GetPosition().x * pixels_per_meter, _structure2->GetPosition().y * pixels_per_meter);
 	_structureShape2->setRotation(_structure2->GetAngle() * deg_per_rad);
 	window.draw(*_structureShape2);
+
+	_structureShape3->setPosition(_structure3->GetPosition().x * pixels_per_meter, _structure3->GetPosition().y * pixels_per_meter);
+	_structureShape3->setRotation(_structure3->GetAngle() * deg_per_rad);
+	window.draw(*_structureShape3);
 	
 }
