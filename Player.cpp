@@ -120,6 +120,7 @@ void Player::cmd()
 
 void Player::reset()
 {
+    _isReset = false;
     _isJumping = false;
     _isFalling = false;
     _isWalking = false;
@@ -137,36 +138,44 @@ void Player::reset()
 //NEW
 void Player::update()
 {   
-    switch (_state) {
-    case PlayerState::Idle:
-        _sprite->setTextureRect({ 64, 0 , 32, 64 });
-        break;
-    case PlayerState::Move:
-        _frame += 0.2f;
-
-        if (_frame > 3) {
-            _frame = 0;
-        }
-
-        if (!_isJumping && _onGround) {
-            _sprite->setTextureRect({ 64 + int(_frame) * 64, 0 , 32, 64 });
-        }
-
-        if (_velocity.x < 0) {
-            _sprite->setScale(1, 1);
-        }
-        else if (_velocity.x > 0) {
-            _sprite->setScale(-1, 1);
-        }
-        break;
+    if (_isReset) {
+        reset();
     }
-  
-    _body->SetLinearVelocity(_velocity);
+    else {
+        switch (_state) {
+        case PlayerState::Idle:
+            _sprite->setTextureRect({ 64, 0 , 32, 64 });
+            break;
+        case PlayerState::Move:
+            _frame += 0.2f;
 
-    _velocity.x = 0.0f;
+            if (_frame > 3) {
+                _frame = 0;
+            }
 
+            if (!_isJumping && _onGround) {
+                _sprite->setTextureRect({ 64 + int(_frame) * 64, 0 , 32, 64 });
+            }
 
-    std::cout << _sprite->getPosition().x << ", " << _sprite->getPosition().y << std::endl;
+            if (_velocity.x < 0) {
+                _sprite->setScale(1, 1);
+            }
+            else if (_velocity.x > 0) {
+                _sprite->setScale(-1, 1);
+            }
+            break;
+        }
+
+        _body->SetLinearVelocity(_velocity);
+
+        _velocity.x = 0.0f;
+    }
+    
+    if (_sprite->getPosition().y >= 700) {
+        reset();
+    }
+
+    std::cout << _onGround << std::endl;
 }
 
 void Player::render(sf::RenderWindow& window) {
@@ -193,11 +202,11 @@ void Player::onBeginContact(b2Fixture* self, b2Fixture* other)
         _onGround = true;
     }
     else if (_groundFixture == self && data->type == FixtureDataType::Enemy) {
-        Enemy* enemy = data->enemy;
         _onGround = true;
-      
     }
-    
+    else if (data && data->type == FixtureDataType::Spike) {
+        _isReset = true;
+    }
 }
 
 void Player::onEndContact(b2Fixture* self, b2Fixture* other)
@@ -212,7 +221,7 @@ void Player::onEndContact(b2Fixture* self, b2Fixture* other)
         _onGround = false;
     }
     else if (_groundFixture == self && data->type == FixtureDataType::Enemy) {
-        _onGround = false;
+        _onGround = true;
     }
 
 }

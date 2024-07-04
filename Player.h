@@ -42,6 +42,7 @@ private:
 	PlayerState _state = PlayerState::Idle;
 
 	bool _onGround = false;
+	bool _isReset = false;
 
 	FixtureData _fixtureData;
 	b2Fixture* _groundFixture;

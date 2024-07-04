@@ -44,7 +44,13 @@ TiledMap::TiledMap(b2World& world) : _world(world)
 
 						// Type of Fixture Data
 						FixtureData* fixtureData = new FixtureData();
-						fixtureData->type = FixtureDataType::GroundTile;
+						if (object.getName() == "Spike") {
+							fixtureData->type = FixtureDataType::Spike;
+						}
+						else {
+							fixtureData->type = FixtureDataType::GroundTile;
+						}
+						
 						fixtureData->mapX = position.x;
 						fixtureData->mapY = position.y;
 
