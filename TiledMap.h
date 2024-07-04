@@ -3,28 +3,23 @@
 #include <box2d/box2d.h>
 #include "constants.h"
 #include "GlobalContactListener.h"
+#include <tmxlite/Map.hpp>
+#include <tmxlite/Layer.hpp>
+#include <tmxlite/TileLayer.hpp>
+#include <tmxlite/ObjectGroup.hpp>
 
 class TiledMap
 {
 private:
     b2World& _world;
 
-    // Temporal
-    sf::RectangleShape* _shape;
-    sf::RectangleShape* _structureShape;
-    sf::RectangleShape* _structureShape2;
-    sf::RectangleShape* _structureShape3;
+    tmx::Map _map;
+    sf::Texture _tileset;
 
-    b2Body* _body;
-    b2Body* _structure;
-    b2Body* _structure2;
-    b2Body* _structure3;
+    sf::Texture _bgTexture;
+    sf::Sprite _bgSprite;
 public:
     TiledMap(b2World& world);
 
     void render(sf::RenderWindow& window);
-
-    void createFloor();
-
-    void createStructure();
 };

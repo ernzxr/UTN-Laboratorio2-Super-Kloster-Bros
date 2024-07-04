@@ -3,17 +3,17 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "main.tsx",
+    "activeFile": "",
     "expandedProjectPaths": [
         "."
     ],
     "fileStates": {
         "Map.tmx": {
-            "scale": 0.75,
-            "selectedLayer": 0,
+            "scale": 0.33,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 404,
-                "y": 425.33333333333337
+                "x": 1019.6969696969697,
+                "y": 615.1515151515151
             }
         },
         "main.tsx": {
@@ -24,18 +24,18 @@
             "scaleInDock": 1
         }
     },
+    "last.externalTilesetPath": "D:/ernzxr/Programacion/GitHub/FirstGame/Tiled",
     "last.imagePath": "D:/ernzxr/Programacion/GitHub/FirstGame/assets",
-    "map.height": 25,
+    "map.height": 20,
     "map.lastUsedFormat": "tmx",
-    "map.width": 100,
+    "map.width": 60,
     "openFiles": [
-        "Map.tmx",
-        "main.tsx"
     ],
     "project": "Tiled.tiled-project",
     "recentFiles": [
         "main.tsx",
         "Map.tmx"
     ],
+    "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx"
 }

@@ -3,11 +3,8 @@
 
 Scene::Scene(b2World& world) : _world(world)  {
 	_tiledMap = new TiledMap(_world);
-	_player = new Player(_world, { 400, 500 });
-	_enemy = new Enemy(_world, { 600, 500 });
-
-	_bgTexture.loadFromFile("assets/bg.jpg");
-	_bgSprite.setTexture(_bgTexture);
+	_player = new Player(_world, { 234, 480 });
+	_enemy = new Enemy(_world, { 600, 480 });
 
 	_continueTexture.loadFromFile("assets/CONTINUE.jpg");
 	_continueSprite.setTexture(_continueTexture);
@@ -33,18 +30,20 @@ sf::Vector2f Scene::getCameraPosition() {
 void Scene::render(sf::RenderWindow& window, bool _paused, int _pauseMenuSelection) {
 	window.clear();
 
+	_world.Step(1.0f / 60, int32(10), int32(8));
+
 	if (!_paused) {
-		_world.Step(1.0f / 60, int32(10), int32(8));
 
 		// Adjust the view to follow the player
 		sf::View view = window.getView();
 		sf::Vector2f playerPos = getCameraPosition();
-		view.setCenter({ playerPos.x + 150,300 });
+		playerPos.x += 150; // La posicion del personaje + 150 para que se vea mas atras el personaje con respecto al centro.
+		playerPos.y = (float(640) / 2); // El alto de la ventana dividido entre 2 para dejarlo fijo al medio.
+		view.setCenter(playerPos);
 		window.setView(view);
 
-		// Draw the background
-		_bgSprite.setPosition(0, 0);
-		window.draw(_bgSprite);
+		// Draw the Map
+		_tiledMap->render(window);
 
 		// Draw the Player
 		_player->render(window);
@@ -52,8 +51,6 @@ void Scene::render(sf::RenderWindow& window, bool _paused, int _pauseMenuSelecti
 		//Draw the Enemy
 		_enemy->render(window);
 
-		// Draw the Map
-		_tiledMap->render(window);
 	}
 	else {
 		if (_pauseMenuSelection == 0) {

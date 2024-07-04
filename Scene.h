@@ -9,13 +9,9 @@ class Scene
 {
 private:
 	b2World& _world;
-	Player* _player;
 	TiledMap* _tiledMap;
+	Player* _player;
 	Enemy* _enemy;
-
-	// Fondo del juego
-	sf::Texture _bgTexture;
-	sf::Sprite _bgSprite;
 
 	// Menu pausa
 	sf::Texture _continueTexture;
