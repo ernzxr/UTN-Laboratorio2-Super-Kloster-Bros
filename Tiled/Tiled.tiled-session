@@ -9,11 +9,11 @@
     ],
     "fileStates": {
         "Map.tmx": {
-            "scale": 1,
-            "selectedLayer": 1,
+            "scale": 1.5,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 6852.5,
-                "y": 389.5
+                "x": 2346.6666666666665,
+                "y": 336.6666666666667
             }
         },
         "main.tsx": {
@@ -30,13 +30,12 @@
     "map.lastUsedFormat": "tmx",
     "map.width": 60,
     "openFiles": [
-        "main.tsx",
         "Map.tmx"
     ],
     "project": "Tiled.tiled-project",
     "recentFiles": [
-        "main.tsx",
-        "Map.tmx"
+        "Map.tmx",
+        "main.tsx"
     ],
     "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx"

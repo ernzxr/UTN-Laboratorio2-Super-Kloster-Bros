@@ -4,10 +4,6 @@
 
 TiledMap::TiledMap(b2World& world) : _world(world)
 {
-	_bgTexture.loadFromFile("assets/bg.jpg");
-	_bgSprite.setTexture(_bgTexture);
-	_bgSprite.setPosition(0, 0);
-
 	if (_map.load("Tiled/Map.tmx"))
 	{
 		// Returns a reference to the vector containing the layer data.
@@ -69,6 +65,26 @@ TiledMap::TiledMap(b2World& world) : _world(world)
 						//std::cout << body->GetPosition().x << " ,"<< body->GetPosition().y << std::endl;
 					}
 				}
+			}
+			else if (layer->getType() == tmx::Layer::Type::Image)
+			{
+				const auto& imageLayer = layer->getLayerAs<tmx::ImageLayer>();
+
+				if (!_bgTexture.loadFromFile("assets/bg.jpg"))
+				{
+					std::cerr << "Failed to load image layer" << std::endl;
+					continue;
+				}
+				// Habilitar la repetición de la textura en el eje X (y Y si es necesario)
+				_bgTexture.setRepeated(true);
+
+				// Crear y configurar el sprite
+				_bgSprite.setTexture(_bgTexture);
+				// Ajustar el tamaño del sprite para que sea más grande que la textura si quieres que se repita
+				// Aquí, como ejemplo, se establece el tamaño del sprite al doble de la textura original en X
+				_bgSprite.setTextureRect(sf::IntRect(0, 0, _bgTexture.getSize().x * 5, _bgTexture.getSize().y));
+
+				_bgSprite.setPosition(imageLayer.getOffset().x, imageLayer.getOffset().y);
 			}
 		}
 

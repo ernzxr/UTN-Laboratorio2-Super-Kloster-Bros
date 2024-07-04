@@ -7,6 +7,8 @@
 #include <tmxlite/Layer.hpp>
 #include <tmxlite/TileLayer.hpp>
 #include <tmxlite/ObjectGroup.hpp>
+#include <tmxlite/ImageLayer.hpp>
+#include <tmxlite/LayerGroup.hpp>
 
 class TiledMap
 {
