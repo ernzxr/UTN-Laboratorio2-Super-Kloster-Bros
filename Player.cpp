@@ -177,7 +177,7 @@ void Player::update()
         reset();
     }
 
-    std::cout << _onGround << std::endl;
+    std::cout << _sprite->getPosition().x << ", "<< _sprite->getPosition().y <<std::endl;
 }
 
 void Player::render(sf::RenderWindow& window) {
