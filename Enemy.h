@@ -23,7 +23,7 @@ private:
 
 
 	FixtureData _fixtureData;
-	b2Fixture* _groundFixture;
+
 	bool _isDead = false;
 	float _deathTimer = 0.0f;
 public:

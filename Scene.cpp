@@ -3,8 +3,8 @@
 
 Scene::Scene(b2World& world) : _world(world)  {
 	_tiledMap = new TiledMap(_world);
-	_player = new Player(_world, { 234, 480 });
-	_enemy = new Enemy(_world, { 600, 480 });
+	_player = new Player(_world, { 234, 511 });
+	_enemy = new Enemy(_world, { 971, 511 });
 
 	_continueTexture.loadFromFile("assets/CONTINUE.jpg");
 	_continueSprite.setTexture(_continueTexture);

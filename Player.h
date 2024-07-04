@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <box2d/box2d.h>
 #include "constants.h"
 #include "GlobalContactListener.h"
@@ -16,6 +17,8 @@ class Player : public ContactListener
 private:
 	sf::Texture _texture;
 	sf::Sprite* _sprite;
+	sf::SoundBuffer _buffer;
+	sf::Sound _sound;
 	b2Body* _body;
 
 	float _width = 32.0f;

@@ -3,17 +3,17 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "Map.tmx",
     "expandedProjectPaths": [
         "."
     ],
     "fileStates": {
         "Map.tmx": {
             "scale": 0.33,
-            "selectedLayer": 1,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 1019.6969696969697,
-                "y": 615.1515151515151
+                "x": 1448.4848484848485,
+                "y": 510.6060606060606
             }
         },
         "main.tsx": {
@@ -30,11 +30,12 @@
     "map.lastUsedFormat": "tmx",
     "map.width": 60,
     "openFiles": [
+        "Map.tmx"
     ],
     "project": "Tiled.tiled-project",
     "recentFiles": [
-        "main.tsx",
-        "Map.tmx"
+        "Map.tmx",
+        "main.tsx"
     ],
     "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx"

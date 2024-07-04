@@ -70,6 +70,9 @@ void Player::cmd()
 
     if (!_didJump) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _onGround) {
+            _buffer.loadFromFile("assets/sounds/smw_jump.wav");
+            _sound.setBuffer(_buffer);
+            _sound.play();
             _didJump = true;
             _isJumping = true;
             isMoving = true;
@@ -81,9 +84,9 @@ void Player::cmd()
 
     
     if (_didJump) {
-        if (_velocity.y > -40.0f && _isJumping) {
+        if (_velocity.y > -36.0f && _isJumping) {
             _velocity.y += -1.0f;
-            if (_velocity.y <= -40.0f) {
+            if (_velocity.y <= -36.0f) {
                 _isJumping = false;
                 _isFalling = true;
                 isMoving = true;
@@ -146,7 +149,9 @@ void Player::update()
     _body->SetLinearVelocity(_velocity);
 
     _velocity.x = 0.0f;
-   
+
+
+    std::cout << _sprite->getPosition().x << std::endl;
 }
 
 void Player::render(sf::RenderWindow& window) {

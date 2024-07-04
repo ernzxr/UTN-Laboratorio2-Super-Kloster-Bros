@@ -79,7 +79,6 @@ void Enemy::update()
 
     _body->SetLinearVelocity(_velocity);
 
-    std::cout << _isDead << std::endl;
 
     if (_isDead) {
         _deathTimer += 0.07f;
@@ -114,4 +113,9 @@ void Enemy::onBeginContact(b2Fixture* self, b2Fixture* other)
 
 void Enemy::onEndContact(b2Fixture* self, b2Fixture* other)
 {
+    FixtureData* data = (FixtureData*)other->GetUserData().pointer;
+
+    if (data && data->type == FixtureDataType::Player) {
+        _isDead = false;
+    }
 }
