@@ -6,6 +6,10 @@ Scene::Scene(b2World& world) : _world(world)  {
 	_enemy = new Enemy(_world, { 971, 511 });
 	_enemy2 = new Enemy(_world, { 4043, 352 });
 	_enemy3 = new Enemy(_world, { 4565, 351 });
+	_enemy4 = new Enemy(_world, { 6191, 287 });
+	_enemy5 = new Enemy(_world, { 6448, 287 });
+	_enemy6 = new Enemy(_world, { 6798, 287 });
+
 
 	_continueTexture.loadFromFile("assets/CONTINUE.jpg");
 	_continueSprite.setTexture(_continueTexture);
@@ -22,6 +26,9 @@ void Scene::update() {
 	_enemy->update();
 	_enemy2->update();
 	_enemy3->update();
+	_enemy4->update();
+	_enemy5->update();
+	_enemy6->update();
 
 	_world.SetContactListener(new GlobalContactListener());
 }
@@ -56,6 +63,9 @@ void Scene::render(sf::RenderWindow& window, bool paused) {
 		_enemy->render(window);
 		_enemy2->render(window);
 		_enemy3->render(window);
+		_enemy4->render(window);
+		_enemy5->render(window);
+		_enemy6->render(window);
 		
 
 	}

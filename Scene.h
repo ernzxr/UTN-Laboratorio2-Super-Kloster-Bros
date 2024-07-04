@@ -12,6 +12,9 @@ private:
 	Enemy* _enemy;
 	Enemy* _enemy2;
 	Enemy* _enemy3;
+	Enemy* _enemy4;
+	Enemy* _enemy5;
+	Enemy* _enemy6;
 
 	// Menu pausa
 	sf::Texture _continueTexture;
