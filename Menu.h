@@ -2,24 +2,17 @@
 #include <SFML/Graphics.hpp>
 
 class Menu {
-public:
+private:
     sf::Texture _nuevaPTexture;
     sf::Sprite _nuevaPSprite;
+
     sf::Texture _rankingTexture;
     sf::Sprite _rankingSprite;
+
     sf::Texture _salirTexture;
     sf::Sprite _salirSprite;
-
-    Menu() {
-        _nuevaPTexture.loadFromFile("assets/NEW_GAME.png");
-        _nuevaPSprite.setTexture(_nuevaPTexture);
-
-        _rankingTexture.loadFromFile("assets/RANKING.png");
-        _rankingSprite.setTexture(_rankingTexture);
-
-        _salirTexture.loadFromFile("assets/SALIR.png");
-        _salirSprite.setTexture(_salirTexture);
-    }
+public:
+    Menu();
 
     void render(sf::RenderWindow& window, int _mainMenuSelection);
 };

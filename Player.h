@@ -24,6 +24,8 @@ private:
 	float _width = 32.0f;
 	float _height = 64.0f;
 
+	b2Vec2 _startingPosition;
+
 	bool _isJumping = false;
 	bool _isFalling = false;
 	bool _isWalking = false;
@@ -53,6 +55,8 @@ public:
 	void render(sf::RenderWindow& window);
 
 	void cmd();
+
+	void reset();
 
 	virtual void onBeginContact(b2Fixture* self, b2Fixture* other) override;
 	virtual void onEndContact(b2Fixture* self, b2Fixture* other) override;

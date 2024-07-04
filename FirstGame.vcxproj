@@ -141,8 +141,10 @@
   <ItemGroup>
     <ClCompile Include="Director.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Gameplay.cpp" />
     <ClCompile Include="GlobalContactListener.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Play.cpp" />
     <ClCompile Include="TiledMap.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Pause.cpp" />
@@ -153,7 +155,9 @@
     <ClInclude Include="constants.h" />
     <ClInclude Include="Director.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Gameplay.h" />
     <ClInclude Include="GlobalContactListener.h" />
+    <ClInclude Include="Play.h" />
     <ClInclude Include="TiledMap.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Pause.h" />

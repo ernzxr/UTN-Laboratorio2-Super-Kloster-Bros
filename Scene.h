@@ -1,34 +1,20 @@
 #pragma once
+#include "constants.h"
 #include <SFML/Graphics.hpp>
-#include <box2d/box2d.h>
-#include "Player.h"
-#include "TiledMap.h"
+#include <Box2D/Box2D.h>
+#include "Menu.h"
+#include "Play.h"
+#include "Pause.h"
 
 class Scene {
 private:
-	b2World& _world;
-	TiledMap* _tiledMap;
-	Player* _player;
-	Enemy* _enemy;
-	Enemy* _enemy2;
-	Enemy* _enemy3;
-	Enemy* _enemy4;
-	Enemy* _enemy5;
-	Enemy* _enemy6;
-
-	// Menu pausa
-	sf::Texture _continueTexture;
-	sf::Sprite _continueSprite;
-
-	// Hacer que el pausa no cierre el juego si no que salga al menu principal.
-	sf::Texture _exitTexture;
-	sf::Sprite _exitSprite;
-
-	// Menu principal
-	// Hacer un menu principal con opciones de nueva partida, ranking, salir.
+	Menu* _menu;
+	Play* _play;
+	Pause* _pause;
 public:
-    Scene(b2World& world);
-    void update();
-    sf::Vector2f getCameraPosition();
-    void render(sf::RenderWindow& window, bool paused);
+	Scene(b2World& world);
+
+	void update(bool _paused, int _pauseMenuSelection, bool _inMainMenu, int _mainMenuSelection);
+
+	void render(sf::RenderWindow& window, bool _paused, int _pauseMenuSelection, bool _inMainMenu, int _mainMenuSelection);
 };

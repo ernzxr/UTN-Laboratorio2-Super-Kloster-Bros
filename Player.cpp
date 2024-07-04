@@ -1,7 +1,7 @@
 #include "Player.h"
 #include <iostream>
 
-Player::Player(b2World& world, b2Vec2 position)
+Player::Player(b2World& world, b2Vec2 position) : _startingPosition(position)
 {
     //NEW
     _fixtureData.listener = this;
@@ -31,7 +31,6 @@ Player::Player(b2World& world, b2Vec2 position)
 
     // Attach Shape to Body
     _body->CreateFixture(&fixtureDef);
-
 
     // Sensor de colisiones para que no se ejecute el salto en bordes de paredes
     b2shape.SetAsBox(0.4f, 0.2f, b2Vec2(0.0f, 1.0f), 0.0f);
@@ -117,6 +116,22 @@ void Player::cmd()
     if (!isMoving) {
         _state = PlayerState::Idle;
     }
+}
+
+void Player::reset()
+{
+    _isJumping = false;
+    _isFalling = false;
+    _isWalking = false;
+    _isDucking = false;
+    _didJump = false;
+    _onGround = true;
+    _stateTime = 0.0f;
+    _velocity = { 0.0f , 0.0f };
+    _frame = 0.0f;
+    _moveSpeed = 10.0f;
+    _state = PlayerState::Idle;
+    _body->SetTransform(b2Vec2((_startingPosition.x + _width / 2.0f) / pixels_per_meter, (_startingPosition.y + _height / 2.0f) / pixels_per_meter), _body->GetAngle());
 }
 
 //NEW
