@@ -3,10 +3,10 @@
 
 Pause::Pause()
 {
-    _continueTexture.loadFromFile("assets/CONTINUE.jpg");
+    _continueTexture.loadFromFile("assets/CONTINUAR.png");
     _continueSprite.setTexture(_continueTexture);
 
-    _exitTexture.loadFromFile("assets/EXIT.jpg");
+    _exitTexture.loadFromFile("assets/PAUSA_SALIR.png");
     _exitSprite.setTexture(_exitTexture);
 }
 
@@ -17,8 +17,8 @@ void Pause::render(sf::RenderWindow& window, int _pauseMenuSelection) {
     float spriteWidth = 600.0f; // Ancho fijo del sprite
     float spriteHeight = 800.0f; // Alto fijo del sprite
     
-    _continueSprite.setPosition(centerPosition.x - spriteWidth / 2, centerPosition.y - spriteHeight / 2 + 200);
-    _exitSprite.setPosition(centerPosition.x - spriteWidth / 2, centerPosition.y - spriteHeight / 2 +200);
+    _continueSprite.setPosition(centerPosition.x - 400.0f, 0.0f);
+    _exitSprite.setPosition(centerPosition.x - 400.0f, 0.0f);
 
     if (_pauseMenuSelection == 0) {
         //_continueSprite.setPosition(cameraPosition.x - 240.0f, 100.0f);
