@@ -145,6 +145,7 @@
     <ClCompile Include="GlobalContactListener.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Play.cpp" />
+    <ClCompile Include="Rank.cpp" />
     <ClCompile Include="TiledMap.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Pause.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Gameplay.h" />
     <ClInclude Include="GlobalContactListener.h" />
     <ClInclude Include="Play.h" />
+    <ClInclude Include="Rank.h" />
     <ClInclude Include="TiledMap.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Pause.h" />
