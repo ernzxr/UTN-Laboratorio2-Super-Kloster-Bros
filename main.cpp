@@ -24,7 +24,7 @@ int main()
 			}
 		}
 
-		if (director.shouldExit()) {
+		if (director.shouldMenu()) {
 			window.close();
 		}
 
