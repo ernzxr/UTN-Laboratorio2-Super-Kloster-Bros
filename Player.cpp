@@ -28,6 +28,8 @@ Player::Player(b2World& world, b2Vec2 position) : _startingPosition(position)
     fixtureDef.shape = &b2shape;
     fixtureDef.density = 1.0f;
     fixtureDef.friction = 0.3f;
+    fixtureDef.userData.pointer = (uintptr_t)&_fixtureData;
+    _spikeFixture = _body->CreateFixture(&fixtureDef);
 
     // Attach Shape to Body
     _body->CreateFixture(&fixtureDef);
@@ -198,14 +200,14 @@ void Player::onBeginContact(b2Fixture* self, b2Fixture* other)
         return;
     }
 
-    if (_groundFixture == self && data->type == FixtureDataType::GroundTile) {
+    if (_spikeFixture == self && data->type == FixtureDataType::Spike) {
+        _isReset = true;
+    }
+    else if (_groundFixture == self && data->type == FixtureDataType::GroundTile) {
         _onGround = true;
     }
     else if (_groundFixture == self && data->type == FixtureDataType::Enemy) {
         _onGround = true;
-    }
-    else if (data && data->type == FixtureDataType::Spike) {
-        _isReset = true;
     }
 }
 
@@ -217,7 +219,10 @@ void Player::onEndContact(b2Fixture* self, b2Fixture* other)
         return;
     }
 
-    if (_groundFixture == self && data->type == FixtureDataType::GroundTile) {
+    if (_spikeFixture == self && data->type == FixtureDataType::Spike) {
+        _isReset = true;
+    }
+    else if (_groundFixture == self && data->type == FixtureDataType::GroundTile) {
         _onGround = false;
     }
     else if (_groundFixture == self && data->type == FixtureDataType::Enemy) {

@@ -46,6 +46,7 @@ private:
 
 	FixtureData _fixtureData;
 	b2Fixture* _groundFixture;
+	b2Fixture* _spikeFixture;
 public:
 	Player(b2World& world, b2Vec2 position);
 
