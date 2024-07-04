@@ -12,6 +12,8 @@ private:
 	TiledMap* _tiledMap;
 	Player* _player;
 	Enemy* _enemy;
+	Enemy* _enemy2;
+	Enemy* _enemy3;
 
 	// Menu pausa
 	sf::Texture _continueTexture;

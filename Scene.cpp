@@ -5,6 +5,8 @@ Scene::Scene(b2World& world) : _world(world)  {
 	_tiledMap = new TiledMap(_world);
 	_player = new Player(_world, { 234, 511 });
 	_enemy = new Enemy(_world, { 971, 511 });
+	_enemy2 = new Enemy(_world, { 4043, 352 });
+	_enemy3 = new Enemy(_world, { 4565, 351 });
 
 	_continueTexture.loadFromFile("assets/CONTINUE.jpg");
 	_continueSprite.setTexture(_continueTexture);
@@ -19,6 +21,8 @@ void Scene::update() {
 	_player->cmd();
 	_player->update();
 	_enemy->update();
+	_enemy2->update();
+	_enemy3->update();
 
 	_world.SetContactListener(new GlobalContactListener());
 }
@@ -50,6 +54,9 @@ void Scene::render(sf::RenderWindow& window, bool _paused, int _pauseMenuSelecti
 
 		//Draw the Enemy
 		_enemy->render(window);
+		_enemy2->render(window);
+		_enemy3->render(window);
+		
 
 	}
 	else {

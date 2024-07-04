@@ -151,7 +151,7 @@ void Player::update()
     _velocity.x = 0.0f;
 
 
-    std::cout << _sprite->getPosition().x << std::endl;
+    std::cout << _sprite->getPosition().x << ", " << _sprite->getPosition().y << std::endl;
 }
 
 void Player::render(sf::RenderWindow& window) {
