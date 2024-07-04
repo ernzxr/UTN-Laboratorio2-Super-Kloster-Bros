@@ -226,7 +226,7 @@ void Player::onEndContact(b2Fixture* self, b2Fixture* other)
         _onGround = false;
     }
     else if (_groundFixture == self && data->type == FixtureDataType::Enemy) {
-        _onGround = true;
+        _onGround = false;
     }
 
 }

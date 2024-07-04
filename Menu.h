@@ -1,5 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+
 
 class Menu {
 private:
@@ -11,6 +13,9 @@ private:
 
     sf::Texture _salirTexture;
     sf::Sprite _salirSprite;
+
+    sf::Music _musicMenu;
+
 public:
     Menu();
 

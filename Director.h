@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <box2d/box2d.h>
 #include "Scene.h"
 #include "Menu.h"
@@ -8,6 +9,8 @@
 class Director {
 private:
     Scene* _scene;
+    sf::SoundBuffer _buffer;
+    sf::Sound _sound;
 
     bool _paused;
     int _pauseMenuSelection;

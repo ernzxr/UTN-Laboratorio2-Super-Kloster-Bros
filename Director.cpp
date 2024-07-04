@@ -43,6 +43,9 @@ void Director::handleInput(sf::Event event) {
 	}
 	else {
 		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+			_buffer.loadFromFile("assets/sounds/smw_save_menu.wav");
+			_sound.setBuffer(_buffer);
+			_sound.play();
 			_paused = !_paused;
 		}
 		if (_paused && event.type == sf::Event::KeyPressed) {

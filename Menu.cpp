@@ -3,6 +3,12 @@
 
 Menu::Menu()
 {
+    if (!_musicMenu.openFromFile("assets/sounds/MenuMusic.wav"))
+        return; // error
+
+    _musicMenu.play();
+    _musicMenu.setVolume(25.0f);
+
     _nuevaPTexture.loadFromFile("assets/NEW_GAME.png");
     _nuevaPSprite.setTexture(_nuevaPTexture);
 
