@@ -20,17 +20,21 @@ int main()
 				window.close();
 			}
 			else {
-				director.handleInput(event);
+				director.update(event);
 			}
 		}
 
-		if (director.shouldMenu()) {
+		if (director.shouldExit()) {
 			window.close();
 		}
 
 		director.update();
 
+		window.clear();
+
 		director.render(window);
+
+		window.display();
 	}
 
 	return 0;

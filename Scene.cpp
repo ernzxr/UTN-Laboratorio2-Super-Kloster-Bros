@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include <iostream>
 
 Scene::Scene(b2World& world)
 {
@@ -7,30 +8,64 @@ Scene::Scene(b2World& world)
 	_pause = new Pause();
 }
 
-void Scene::update(bool _paused, int _pauseMenuSelection, bool _inMainMenu, int _mainMenuSelection)
-{
-	if (!_paused && !_inMainMenu)
-	{
-		_play->update();
-	}
+void Scene::update() {
+    if (_play->getPlay()) {
+        _play->update();
+    }
 }
 
-void Scene::render(sf::RenderWindow& window, bool _paused, int _pauseMenuSelection, bool _inMainMenu, int _mainMenuSelection)
+void Scene::update(sf::Event event)
 {
-	window.clear();
+    if (_menu->getMainMenu())
+    {
+        _menu->update(event);
+        if (_menu->getSelectedOption() == 0) {
+            _menu->close();
+            _play->open();
+        }
+        else if (_menu->getSelectedOption() == 2) {
+            _menu->close();
+        }
+    }
+    else if (_pause->getPaused())
+    {
+        _pause->update(event);
+        if (_pause->getSelectedOption() == 0) {
+            _pause->close();
+            _play->open();
+        }
+        else if (_pause->getSelectedOption() == 1) {
+            _pause->close();
+            _menu->open();
+        }
+    }
+    else if (_play->getPlay())
+    {
+        _play->update(event);
+        if (_play->getPause()) {
+            _play->close();
+            _pause->open();
+        }
+    }
+}
 
-	if (_paused)
+void Scene::render(sf::RenderWindow& window)
+{
+	if (_menu->getMainMenu())
 	{
-		_pause->render(window, _pauseMenuSelection);
+		_menu->render(window);
 	}
-	else if (_inMainMenu)
+	else if (_pause->getPaused())
 	{
-		_menu->render(window, _mainMenuSelection);
+		_pause->render(window);
 	}
-	else
+	else if (_play->getPlay())
 	{
 		_play->render(window);
 	}
+}
 
-	window.display();
+bool Scene::shouldExit() const
+{
+	return _menu->getShouldExit();
 }

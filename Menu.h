@@ -16,8 +16,24 @@ private:
 
     sf::Music _musicMenu;
 
+    int _mainMenuSelection;
+    int _selectedOption;
+
+    bool _inMainMenu;
 public:
     Menu();
 
-    void render(sf::RenderWindow& window, int _mainMenuSelection);
+    void update(sf::Event event);
+
+    void render(sf::RenderWindow& window);
+
+    bool getMainMenu() const;
+
+    bool getShouldExit() const;
+
+    void open();
+
+    void close();
+
+    int getSelectedOption() const;
 };

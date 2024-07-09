@@ -14,7 +14,11 @@ private:
 public:
 	Scene(b2World& world);
 
-	void update(bool _paused, int _pauseMenuSelection, bool _inMainMenu, int _mainMenuSelection);
+	void update();
 
-	void render(sf::RenderWindow& window, bool _paused, int _pauseMenuSelection, bool _inMainMenu, int _mainMenuSelection);
+	void update(sf::Event event);
+
+	void render(sf::RenderWindow& window);
+
+	bool shouldExit() const;
 };
