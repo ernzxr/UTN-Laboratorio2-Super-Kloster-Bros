@@ -3,7 +3,7 @@
 
 Play::Play(b2World& world) : _world(world)
 {
-	restart();
+	//restart();
 	_play = false;
 	_pause = false;
 }
