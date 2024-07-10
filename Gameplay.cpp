@@ -3,7 +3,7 @@
 Gameplay::Gameplay(b2World& world) : _world(world)
 {
 	_tiledMap = new TiledMap(_world);
-	_player = new Player(_world, { 234, 480 }); restart();
+	_player = new Player(_world, { 234, 480 });
 	_enemy = new Enemy(world, { 971, 511 });
 	_enemy2 = new Enemy(world, { 4043, 352 });
 	_enemy3 = new Enemy(world, { 4565, 351 });
