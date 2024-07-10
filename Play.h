@@ -6,6 +6,7 @@
 class Play
 {
 private:
+	b2World& _world;
 	Gameplay* _gameplay;
 
 	bool _play;
@@ -22,6 +23,8 @@ public:
 	bool getPlay() const;
 
 	bool getPause() const;
+
+	void restart();
 
 	void open();
 

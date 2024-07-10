@@ -50,6 +50,8 @@ private:
 public:
 	Player(b2World& world, b2Vec2 position);
 
+	~Player();
+
 	sf::Vector2f getPosition();
 
 	void update();

@@ -29,6 +29,8 @@ private:
 public:
 	Enemy(b2World& world, b2Vec2 position);
 
+	~Enemy();
+
 	void update();
 
 	void render(sf::RenderWindow& window);

@@ -51,6 +51,11 @@ Player::Player(b2World& world, b2Vec2 position) : _startingPosition(position)
     _body->GetUserData().pointer = reinterpret_cast<uintptr_t>(_sprite);
 }
 
+Player::~Player()
+{
+    _body->GetWorld()->DestroyBody(_body);
+}
+
 //NEW
 void Player::cmd()
 {

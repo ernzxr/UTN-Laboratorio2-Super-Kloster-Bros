@@ -53,6 +53,11 @@ Enemy::Enemy(b2World& world, b2Vec2 position)
     _body->GetUserData().pointer = reinterpret_cast<uintptr_t>(_sprite);
 }
 
+Enemy::~Enemy()
+{
+    _body->GetWorld()->DestroyBody(_body);
+}
+
 void Enemy::update()
 {
     _frame += 0.1f;

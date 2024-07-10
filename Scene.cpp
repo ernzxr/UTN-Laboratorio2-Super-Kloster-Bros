@@ -14,13 +14,13 @@ void Scene::update() {
     }
 }
 
-void Scene::update(sf::Event event)
-{
+void Scene::update(sf::Event event){
     if (_menu->getMainMenu())
     {
         _menu->update(event);
         if (_menu->getSelectedOption() == 0) {
             _menu->close();
+            _play->restart();
             _play->open();
         }
         else if (_menu->getSelectedOption() == 2) {

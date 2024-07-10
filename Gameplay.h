@@ -22,7 +22,7 @@ public:
 
 	void render(sf::RenderWindow& window);
 
-	void restart();
+	void gameOver();
 
 	sf::Vector2f getCameraPosition();
 };

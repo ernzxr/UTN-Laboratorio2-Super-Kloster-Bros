@@ -1,9 +1,9 @@
 #pragma once
 #include "Play.h"
 
-Play::Play(b2World& world)
+Play::Play(b2World& world) : _world(world)
 {
-	_gameplay = new Gameplay(world);
+	restart();
 	_play = false;
 	_pause = false;
 }
@@ -35,6 +35,14 @@ bool Play::getPlay() const
 bool Play::getPause() const
 {
 	return _pause;
+}
+
+void Play::restart()
+{
+	if (_gameplay != nullptr) {
+		delete _gameplay;
+	}
+	_gameplay = new Gameplay(_world);
 }
 
 void Play::open()
