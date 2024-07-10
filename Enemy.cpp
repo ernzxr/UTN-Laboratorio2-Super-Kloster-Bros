@@ -34,13 +34,14 @@ Enemy::Enemy(b2World& world, b2Vec2 position)
     _body->CreateFixture(&fixtureDef);
 
    
-    
+    /*
     // Sensor de colisiones para que no se ejecute el salto en bordes de paredes
     b2shape.SetAsBox(0.4f, 0.2f, b2Vec2(0.0f, 1.0f), 0.0f);
     fixtureDef.userData.pointer = (uintptr_t)&_fixtureData;
     fixtureDef.isSensor = true;
     _body->CreateFixture(&fixtureDef);
-    
+    */
+
     
     // Create SFML Sprite
     _texture.loadFromFile("assets/SpriteSheetTimesTwo.png");

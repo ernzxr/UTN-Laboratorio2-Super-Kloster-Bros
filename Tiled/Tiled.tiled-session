@@ -9,11 +9,11 @@
     ],
     "fileStates": {
         "Map.tmx": {
-            "scale": 1,
+            "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 7224.5,
-                "y": 320.5
+                "x": 2912,
+                "y": 640
             }
         },
         "main.tsx": {

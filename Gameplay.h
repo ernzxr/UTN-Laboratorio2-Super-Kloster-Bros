@@ -2,6 +2,8 @@
 #include "TiledMap.h"
 #include "Player.h"
 #include "Enemy.h"
+#include <SFML/Graphics.hpp>
+#include <Box2D/Box2D.h>
 
 class Gameplay
 {
@@ -15,6 +17,7 @@ private:
 	Enemy* _enemy4;
 	Enemy* _enemy5;
 	Enemy* _enemy6;
+
 public:
 	Gameplay(b2World& world);
 

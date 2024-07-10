@@ -34,6 +34,7 @@ Player::Player(b2World& world, b2Vec2 position) : _startingPosition(position)
     // Attach Shape to Body
     _body->CreateFixture(&fixtureDef);
 
+    
     // Sensor de colisiones para que no se ejecute el salto en bordes de paredes
     b2shape.SetAsBox(0.4f, 0.2f, b2Vec2(0.0f, 1.0f), 0.0f);
     fixtureDef.userData.pointer = (uintptr_t)&_fixtureData;

@@ -22,47 +22,56 @@ TiledMap::TiledMap(b2World& world) : _world(world)
 
 					if (shape == tmx::Object::Shape::Rectangle)
 					{
+
 						tmx::Vector2f position = object.getPosition();
 						float width = object.getAABB().width;
 						float height = object.getAABB().height;
 
-						// Define Body
-						b2BodyDef bodyDef;
-						bodyDef.position.Set((position.x + width / 2.0f) / pixels_per_meter, (position.y + height / 2.0f) / pixels_per_meter);
-						bodyDef.type = b2_staticBody;
-
-						// Create Body
-						b2Body* body = world.CreateBody(&bodyDef);
-
-						// Create Shape
-						b2PolygonShape b2shape;
-						b2shape.SetAsBox(width / 2.0f / pixels_per_meter, height / 2.0f / pixels_per_meter);
-
-						// Type of Fixture Data
-						FixtureData* fixtureData = new FixtureData();
-						if (object.getName() == "Spike") {
-							fixtureData->type = FixtureDataType::Spike;
+						if (object.getName() == "Enemy") {
+							Enemy* enemy = new Enemy(_world, b2Vec2(position.x, position.y));
+							_enemies.push_back(enemy);
 						}
 						else {
-							fixtureData->type = FixtureDataType::GroundTile;
+							// Define Body
+							b2BodyDef bodyDef;
+							bodyDef.position.Set((position.x + width / 2.0f) / pixels_per_meter, (position.y + height / 2.0f) / pixels_per_meter);
+							bodyDef.type = b2_staticBody;
+
+							// Create Body
+							b2Body* body = world.CreateBody(&bodyDef);
+
+							// Create Shape
+							b2PolygonShape b2shape;
+							b2shape.SetAsBox(width / 2.0f / pixels_per_meter, height / 2.0f / pixels_per_meter);
+
+							// Type of Fixture Data
+							FixtureData* fixtureData = new FixtureData();
+							if (object.getName() == "Spike") {
+								fixtureData->type = FixtureDataType::Spike;
+							}
+							else {
+								fixtureData->type = FixtureDataType::GroundTile;
+							}
+
+							fixtureData->mapX = position.x;
+							fixtureData->mapY = position.y;
+
+							// Create Fixture
+							b2FixtureDef fixtureDef;
+							fixtureDef.userData.pointer = (uintptr_t)(fixtureData);
+							fixtureDef.shape = &b2shape;
+							fixtureDef.density = 0.0f;
+							fixtureDef.friction = 0.0f;
+
+							// Attach Shape to Body
+							body->CreateFixture(&fixtureDef);
+
+							// Debug
+							//std::cout<< "Width: " << width << " Height: " << height << " Position: " << position.x << " " << position.y << std::endl;
+							//std::cout << body->GetPosition().x << " ,"<< body->GetPosition().y << std::endl;
+
 						}
 						
-						fixtureData->mapX = position.x;
-						fixtureData->mapY = position.y;
-
-						// Create Fixture
-						b2FixtureDef fixtureDef;
-						fixtureDef.userData.pointer = (uintptr_t)(fixtureData);
-						fixtureDef.shape = &b2shape;
-						fixtureDef.density = 0.0f;
-						fixtureDef.friction = 0.0f;
-
-						// Attach Shape to Body
-						body->CreateFixture(&fixtureDef);
-						
-						// Debug
-						//std::cout<< "Width: " << width << " Height: " << height << " Position: " << position.x << " " << position.y << std::endl;
-						//std::cout << body->GetPosition().x << " ,"<< body->GetPosition().y << std::endl;
 					}
 				}
 			}
@@ -144,4 +153,9 @@ void TiledMap::render(sf::RenderWindow& window)
 			}
 		}
 	}
+}
+
+
+std::vector<Enemy*>& TiledMap::getVector() {
+	return _enemies;
 }
