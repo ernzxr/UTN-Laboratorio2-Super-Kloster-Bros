@@ -4,29 +4,27 @@
 
 Gameplay::Gameplay(b2World& world) : _world(world)
 {
-	_tiledMap = new TiledMap(_world);
-	_player = new Player(_world, { 234, 480 });
+	generateMap();
+	spawnPlayer();
+	spawnEnemies();
 }
 
 void Gameplay::update()
 {
 	// Restart the game with T
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
-		_player->reset();
+		gameOver();
 	}
 
 	_player->cmd();
 	_player->update();
 
-	// Update Enemy
-	auto& enemies = _tiledMap->getVector();
+	// Update Enemies
+	auto& enemies = _enemySpawn->getEnemies();
 	for (auto enemy : enemies) {
 		enemy->update();
 	}
 	
-	
-	
-
 	_world.SetContactListener(new GlobalContactListener());
 }
 
@@ -49,14 +47,34 @@ void Gameplay::render(sf::RenderWindow& window)
 	_player->render(window);
 
 	// Draw the Enemy
-	auto& enemies = _tiledMap->getVector();
+	auto& enemies = _enemySpawn->getEnemies();
 	for (auto enemy : enemies) {
 		enemy->render(window);
 	}
-	
+}
+
+void Gameplay::spawnPlayer() {
+	_player = new Player(_world, _tiledMap->getPlayerSpawnPoint());
+}
+
+void Gameplay::generateMap() {
+	_tiledMap = new TiledMap(_world);
+}
+
+void Gameplay::spawnEnemies() {
+	_enemySpawn = new EnemySpawn(_world, _tiledMap->getMap());
 }
 
 void Gameplay::gameOver()
+{
+	delete _player;
+	spawnPlayer();
+
+	delete _enemySpawn;
+	spawnEnemies();
+}
+
+void Gameplay::gameWin()
 {
 }
 

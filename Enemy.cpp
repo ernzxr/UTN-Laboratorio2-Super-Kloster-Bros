@@ -3,7 +3,6 @@
 
 Enemy::Enemy(b2World& world, b2Vec2 position)
 {
-    //NEW
     _fixtureData.listener = this;
     _fixtureData.enemy = this;
     _fixtureData.type = FixtureDataType::Enemy;
@@ -23,8 +22,6 @@ Enemy::Enemy(b2World& world, b2Vec2 position)
 
     // Create Fixture
     b2FixtureDef fixtureDef;
-
-    //NEW
     fixtureDef.shape = &b2shape;
     fixtureDef.density = 1.0f;
     fixtureDef.friction = 0.3f;
@@ -38,8 +35,6 @@ Enemy::Enemy(b2World& world, b2Vec2 position)
     fixtureDef.userData.pointer = (uintptr_t)&_fixtureData;
     fixtureDef.isSensor = true;
     _body->CreateFixture(&fixtureDef);
-    
-
     
     // Create SFML Sprite
     _texture.loadFromFile("assets/SpriteSheetTimesTwo.png");

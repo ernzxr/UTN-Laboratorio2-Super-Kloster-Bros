@@ -21,7 +21,6 @@ private:
 
 	float _frame = 0.0f;
 
-
 	FixtureData _fixtureData;
 
 	bool _isDead = false;

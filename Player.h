@@ -42,7 +42,6 @@ private:
 	PlayerState _state = PlayerState::Idle;
 
 	bool _onGround = false;
-	bool _isReset = false;
 
 	FixtureData _fixtureData;
 	b2Fixture* _groundFixture;
@@ -59,8 +58,6 @@ public:
 	void render(sf::RenderWindow& window);
 
 	void cmd();
-
-	void reset();
 
 	virtual void onBeginContact(b2Fixture* self, b2Fixture* other) override;
 	virtual void onEndContact(b2Fixture* self, b2Fixture* other) override;
