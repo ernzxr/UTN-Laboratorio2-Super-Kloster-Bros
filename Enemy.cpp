@@ -32,15 +32,13 @@ Enemy::Enemy(b2World& world, b2Vec2 position)
 
     // Attach Shape to Body
     _body->CreateFixture(&fixtureDef);
-
-   
-    /*
+    
     // Sensor de colisiones para que no se ejecute el salto en bordes de paredes
     b2shape.SetAsBox(0.4f, 0.2f, b2Vec2(0.0f, 1.0f), 0.0f);
     fixtureDef.userData.pointer = (uintptr_t)&_fixtureData;
     fixtureDef.isSensor = true;
     _body->CreateFixture(&fixtureDef);
-    */
+    
 
     
     // Create SFML Sprite
@@ -113,7 +111,7 @@ void Enemy::onBeginContact(b2Fixture* self, b2Fixture* other)
     FixtureData* data = (FixtureData*)other->GetUserData().pointer;
 
     if (data && data->type == FixtureDataType::Player) {
-        _isDead = true;
+            _isDead = true;
     }
 
 }
@@ -121,8 +119,4 @@ void Enemy::onBeginContact(b2Fixture* self, b2Fixture* other)
 void Enemy::onEndContact(b2Fixture* self, b2Fixture* other)
 {
     FixtureData* data = (FixtureData*)other->GetUserData().pointer;
-
-    if (data && data->type == FixtureDataType::Player) {
-        _isDead = false;
-    }
 }

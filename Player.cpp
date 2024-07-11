@@ -182,8 +182,6 @@ void Player::update()
     if (_sprite->getPosition().y >= 700) {
         reset();
     }
-
-    std::cout << _sprite->getPosition().x << ", "<< _sprite->getPosition().y <<std::endl;
 }
 
 void Player::render(sf::RenderWindow& window) {
@@ -214,6 +212,7 @@ void Player::onBeginContact(b2Fixture* self, b2Fixture* other)
     }
     else if (_groundFixture == self && data->type == FixtureDataType::Enemy) {
         _onGround = true;
+        
     }
 }
 
