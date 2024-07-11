@@ -22,7 +22,6 @@ TiledMap::TiledMap(b2World& world) : _world(world)
 
 					if (shape == tmx::Object::Shape::Rectangle)
 					{
-
 						tmx::Vector2f position = object.getPosition();
 						float width = object.getAABB().width;
 						float height = object.getAABB().height;
@@ -69,9 +68,107 @@ TiledMap::TiledMap(b2World& world) : _world(world)
 							// Debug
 							//std::cout<< "Width: " << width << " Height: " << height << " Position: " << position.x << " " << position.y << std::endl;
 							//std::cout << body->GetPosition().x << " ,"<< body->GetPosition().y << std::endl;
-
 						}
-						
+					}
+					else if (shape == tmx::Object::Shape::Polyline)
+					{
+						// Vertices
+						std::vector<b2Vec2> points;
+
+						for (auto& point : object.getPoints())
+						{
+							points.push_back(b2Vec2(point.x / pixels_per_meter, point.y / pixels_per_meter));
+						}
+
+						// Ghost vertices
+						b2Vec2 firstGhostVertex = points.front() - points[1];
+						firstGhostVertex.Normalize();
+						firstGhostVertex.x *= 0.1f;
+						firstGhostVertex.y *= 0.1f;
+						b2Vec2 prevVertex = points.front() + firstGhostVertex;
+
+						b2Vec2 secondGhostVertex = points.back() - points[object.getPoints().size() - 2];
+						secondGhostVertex.Normalize();
+						secondGhostVertex.x *= 0.1f;
+						secondGhostVertex.y *= 0.1f;
+						b2Vec2 nextVertex = points.back() + secondGhostVertex;
+
+						tmx::Vector2f position = object.getPosition();
+
+						// Define Body
+						b2BodyDef bodyDef;
+						bodyDef.position.Set(position.x / pixels_per_meter, position.y / pixels_per_meter);
+						bodyDef.type = b2_staticBody;
+
+						// Create Body
+						b2Body* body = world.CreateBody(&bodyDef);
+
+						// Create Shape
+						b2ChainShape chainShape;
+						chainShape.CreateChain(points.data(), points.size(), prevVertex, nextVertex);
+
+						// Type of Fixture Data
+						FixtureData* fixtureData = new FixtureData();
+						if (object.getName() == "Spike") {
+							fixtureData->type = FixtureDataType::Spike;
+						}
+
+						fixtureData->mapX = position.x;
+						fixtureData->mapY = position.y;
+
+						// Create Fixture
+						b2FixtureDef fixtureDef;
+						fixtureDef.userData.pointer = (uintptr_t)(fixtureData);
+						fixtureDef.shape = &chainShape;
+						fixtureDef.density = 0.0f;
+						fixtureDef.friction = 0.0f;
+
+						// Attach Shape to Body
+						body->CreateFixture(&fixtureDef);
+					}
+					else if (shape == tmx::Object::Shape::Polygon)
+					{
+						// Vertices
+						std::vector<b2Vec2> points;
+
+						for (int i = 0; i < object.getPoints().size() - 1; i++)
+						{
+							const auto& point = object.getPoints()[i];
+							points.push_back(b2Vec2(point.x / pixels_per_meter, point.y / pixels_per_meter));
+						}
+
+						tmx::Vector2f position = object.getPosition();
+
+						// Define Body
+						b2BodyDef bodyDef;
+						bodyDef.position.Set(position.x / pixels_per_meter, position.y / pixels_per_meter);
+						bodyDef.type = b2_staticBody;
+
+						// Create Body
+						b2Body* body = world.CreateBody(&bodyDef);
+
+						// Create Shape
+						b2ChainShape chainShape;
+						chainShape.CreateLoop(points.data(), points.size());
+
+						// Type of Fixture Data
+						FixtureData* fixtureData = new FixtureData();
+						if (object.getName() == "Spike") {
+							fixtureData->type = FixtureDataType::Spike;
+						}
+
+						fixtureData->mapX = position.x;
+						fixtureData->mapY = position.y;
+
+						// Create Fixture
+						b2FixtureDef fixtureDef;
+						fixtureDef.userData.pointer = (uintptr_t)(fixtureData);
+						fixtureDef.shape = &chainShape;
+						fixtureDef.density = 0.0f;
+						fixtureDef.friction = 0.0f;
+
+						// Attach Shape to Body
+						body->CreateFixture(&fixtureDef);
 					}
 				}
 			}
