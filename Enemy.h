@@ -25,7 +25,6 @@ private:
 
 	bool _isDead = false;
 	float _deathTimer = 0.0f;
-
 public:
 	Enemy(b2World& world, b2Vec2 position);
 

@@ -37,6 +37,13 @@ Player::Player(b2World& world, b2Vec2 position) : _startingPosition(position)
 	fixtureDef.isSensor = true;
 	_groundFixture = _body->CreateFixture(&fixtureDef);
 
+	//Enemy sensorFixture
+	b2shape.SetAsBox(0.1f, 0.4f, b2Vec2(0.50f, 0.0f), 0.0f);
+	fixtureDef.userData.pointer = (uintptr_t)&_fixtureData;
+	fixtureDef.isSensor = true;
+	_enemyFixture = _body->CreateFixture(&fixtureDef);
+
+
 	// Create SFML Sprite
 	_texture.loadFromFile("assets/SpriteSheetTimesTwo.png");
 	_sprite = new sf::Sprite();
@@ -161,6 +168,23 @@ void Player::render(sf::RenderWindow& window) {
 	_sprite->setPosition(_body->GetPosition().x * pixels_per_meter, _body->GetPosition().y * pixels_per_meter);
 	_sprite->setRotation(_body->GetAngle() * deg_per_rad);
 	window.draw(*_sprite);
+
+	// Dibujar los fixtures para depuración
+	drawFixture(_spikeFixture, window, sf::Color(255, 0, 0, 100)); // Rojo
+	drawFixture(_groundFixture, window, sf::Color(0, 255, 0, 100)); // Verde
+	drawFixture(_enemyFixture, window, sf::Color(0, 0, 255, 100)); // Azul
+
+}
+
+void Player::drawFixture(b2Fixture* fixture, sf::RenderWindow& window, sf::Color color) {
+	b2PolygonShape* shape = static_cast<b2PolygonShape*>(fixture->GetShape());
+	b2Vec2 position = _body->GetPosition();
+	sf::RectangleShape fixtureShape;
+	fixtureShape.setSize(sf::Vector2f((shape->m_vertices[1].x - shape->m_vertices[0].x) * pixels_per_meter, (shape->m_vertices[2].y - shape->m_vertices[1].y) * pixels_per_meter));
+	fixtureShape.setOrigin(fixtureShape.getSize().x / 2, fixtureShape.getSize().y / 2);
+	fixtureShape.setPosition((position.x + shape->m_centroid.x) * pixels_per_meter, (position.y + shape->m_centroid.y) * pixels_per_meter);
+	fixtureShape.setFillColor(color);
+	window.draw(fixtureShape);
 }
 
 sf::Vector2f Player::getPosition() {
@@ -182,8 +206,13 @@ void Player::onBeginContact(b2Fixture* self, b2Fixture* other)
 		_onGround = true;
 	}
 	else if (_groundFixture == self && data->type == FixtureDataType::Enemy) {
+		//_onGround = true;
+	}
+	else if(self == _enemyFixture && data->type == FixtureDataType::Enemy) {
+		_death = true;
+	}
+	else if (self != _groundFixture && self != _spikeFixture && data->type == FixtureDataType::Enemy) {
 		_onGround = true;
-
 	}
 }
 
@@ -200,8 +229,16 @@ void Player::onEndContact(b2Fixture* self, b2Fixture* other)
 	else if (_groundFixture == self && data->type == FixtureDataType::GroundTile) {
 		_onGround = false;
 	}
-	else if (_groundFixture == self && data->type == FixtureDataType::Enemy) {
+	else if (self != _groundFixture && self != _spikeFixture && self == self && data->type == FixtureDataType::Enemy) {
 		_onGround = false;
 	}
+	else if (self != _groundFixture && self != _spikeFixture && self == _enemyFixture && data->type == FixtureDataType::Enemy) {
+		// Si el contacto no es con los sensores, maneja el final de la colisión con el cuerpo principal del enemigo.
+		
+	}
 
+}
+
+bool Player::isDead() {
+	return _death;
 }

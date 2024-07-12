@@ -24,6 +24,10 @@ void Gameplay::update()
 	for (auto enemy : enemies) {
 		enemy->update();
 	}
+
+	if (_player->isDead()) {
+		gameOver();
+	}
 	
 	_world.SetContactListener(new GlobalContactListener());
 }

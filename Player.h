@@ -42,10 +42,12 @@ private:
 	PlayerState _state = PlayerState::Idle;
 
 	bool _onGround = false;
+	bool _death = false;
 
 	FixtureData _fixtureData;
 	b2Fixture* _groundFixture;
 	b2Fixture* _spikeFixture;
+	b2Fixture* _enemyFixture;
 public:
 	Player(b2World& world, b2Vec2 position);
 
@@ -58,6 +60,9 @@ public:
 	void render(sf::RenderWindow& window);
 
 	void cmd();
+
+	void drawFixture(b2Fixture* fixture, sf::RenderWindow& window, sf::Color color);
+	bool isDead();
 
 	virtual void onBeginContact(b2Fixture* self, b2Fixture* other) override;
 	virtual void onEndContact(b2Fixture* self, b2Fixture* other) override;
