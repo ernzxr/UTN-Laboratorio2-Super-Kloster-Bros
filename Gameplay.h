@@ -5,6 +5,7 @@
 #include "EnemySpawn.h"
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
+#include "Structures.h"
 
 class Gameplay
 {
@@ -13,8 +14,11 @@ private:
 	TiledMap* _tiledMap;
 	Player* _player;
 	EnemySpawn* _enemySpawn;
+	Structures* _structures;
 public:
 	Gameplay(b2World& world);
+
+	~Gameplay();
 
 	void update();
 
@@ -29,6 +33,8 @@ public:
 	void spawnPlayer();
 
 	void spawnEnemies();
+
+	void spawnStructures();
 
 	sf::Vector2f getCameraPosition();
 };

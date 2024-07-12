@@ -24,7 +24,9 @@ public:
 
 	bool getPause() const;
 
-	void restart();
+	void newGame();
+
+	void createGameplay();
 
 	void open();
 

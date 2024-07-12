@@ -3,7 +3,7 @@
 
 Play::Play(b2World& world) : _world(world)
 {
-	//restart();
+	_gameplay = nullptr;
 	_play = false;
 	_pause = false;
 }
@@ -37,12 +37,16 @@ bool Play::getPause() const
 	return _pause;
 }
 
-void Play::restart()
+void Play::createGameplay()
 {
+	_gameplay = new Gameplay(_world);
+}
+
+void Play::newGame() {
 	if (_gameplay != nullptr) {
 		delete _gameplay;
 	}
-	_gameplay = new Gameplay(_world);
+	createGameplay();
 }
 
 void Play::open()

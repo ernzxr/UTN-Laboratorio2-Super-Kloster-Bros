@@ -29,67 +29,67 @@
 </data>
  </layer>
  <objectgroup id="3" name="Object Layer 1">
-  <object id="25" x="-33" y="-3" width="32" height="544"/>
-  <object id="35" x="0" y="544" width="383.182" height="96"/>
-  <object id="68" x="1217.18" y="575.136" width="160" height="64"/>
+  <object id="25" name="Terrain" x="-33" y="-3" width="32" height="544"/>
+  <object id="35" name="Terrain" x="0" y="544" width="383.182" height="96"/>
+  <object id="68" name="Terrain" x="1217.18" y="575.136" width="160" height="64"/>
   <object id="69" name="Spike" x="1217.18" y="543.136" width="32" height="32"/>
   <object id="70" name="Spike" x="1345.18" y="543.136" width="32" height="32"/>
   <object id="71" name="Spike" x="928" y="544" width="32" height="32"/>
   <object id="72" name="Spike" x="992" y="544" width="32" height="32"/>
-  <object id="73" x="928" y="576" width="96" height="64"/>
-  <object id="79" x="1984" y="608" width="128" height="32"/>
-  <object id="80" x="2176" y="608" width="160" height="32"/>
-  <object id="83" x="2432" y="544" width="224" height="32"/>
-  <object id="86" x="2687.88" y="480" width="160.125" height="32"/>
+  <object id="73" name="Terrain" x="928" y="576" width="96" height="64"/>
+  <object id="79" name="Terrain" x="1984" y="608" width="128" height="32"/>
+  <object id="80" name="Terrain" x="2176" y="608" width="160" height="32"/>
+  <object id="83" name="Terrain" x="2432" y="544" width="224" height="32"/>
+  <object id="86" name="Terrain" x="2687.88" y="480" width="160.125" height="32"/>
   <object id="87" name="Spike" x="2816" y="448" width="32" height="32"/>
   <object id="88" name="Spike" x="2496" y="352" width="32" height="32"/>
-  <object id="89" x="2496" y="384" width="128" height="32"/>
-  <object id="90" x="2688" y="288" width="128" height="32"/>
+  <object id="89" name="Terrain" x="2496" y="384" width="128" height="32"/>
+  <object id="90" name="Terrain" x="2688" y="288" width="128" height="32"/>
   <object id="91" name="Spike" x="2784" y="256" width="32" height="32"/>
-  <object id="93" x="2560" y="224" width="96" height="32"/>
-  <object id="94" x="2720" y="160" width="64" height="32"/>
-  <object id="96" x="3264" y="576" width="160" height="64.25"/>
+  <object id="93" name="Terrain" x="2560" y="224" width="96" height="32"/>
+  <object id="94" name="Terrain" x="2720" y="160" width="64" height="32"/>
+  <object id="96" name="Terrain" x="3264" y="576" width="160" height="64.25"/>
   <object id="97" name="Spike" x="3264" y="544" width="32" height="32"/>
   <object id="98" name="Spike" x="3392" y="544" width="32" height="32"/>
-  <object id="100" x="3552" y="448" width="96" height="32"/>
-  <object id="105" x="5215.33" y="575.333" width="192" height="64"/>
-  <object id="109" x="1760" y="224" width="64" height="90"/>
+  <object id="100" name="Terrain" x="3552" y="448" width="96" height="32"/>
+  <object id="105" name="Terrain" x="5215.33" y="575.333" width="192" height="64"/>
+  <object id="109" name="Terrain" x="1760" y="224" width="64" height="90"/>
   <object id="110" name="Spike" x="1984" y="576" width="128" height="32"/>
   <object id="111" name="Spike" x="2432" y="512" width="32.1212" height="31"/>
   <object id="112" name="Spike" x="5216" y="544" width="32" height="32"/>
-  <object id="121" x="6144" y="320" width="96" height="64"/>
-  <object id="126" x="6400" y="320" width="96" height="64"/>
+  <object id="121" name="Terrain" x="6144" y="320" width="96" height="64"/>
+  <object id="126" name="Terrain" x="6400" y="320" width="96" height="64"/>
   <object id="127" name="Spike" x="6144" y="288" width="32" height="32"/>
   <object id="128" name="Spike" x="6208" y="288" width="32" height="32"/>
   <object id="130" name="Spike" x="6400" y="288" width="32" height="32"/>
   <object id="131" name="Spike" x="6464" y="288" width="32" height="32"/>
-  <object id="133" x="6752.33" y="320.333" width="96" height="64"/>
+  <object id="133" name="Terrain" x="6752.33" y="320.333" width="96" height="64"/>
   <object id="134" name="Spike" x="6752.33" y="288.333" width="32" height="32"/>
   <object id="135" name="Spike" x="6816.33" y="288.333" width="32" height="32"/>
-  <object id="141" x="7040" y="320" width="640" height="320"/>
-  <object id="142" x="448" y="384" width="192" height="64"/>
+  <object id="141" name="Terrain" x="7040" y="320" width="640" height="320"/>
+  <object id="142" name="Terrain" x="448" y="384" width="192" height="64"/>
   <object id="144" name="Spike" x="640" y="384" width="32" height="64"/>
-  <object id="145" x="1440" y="448" width="96" height="64"/>
+  <object id="145" name="Terrain" x="1440" y="448" width="96" height="64"/>
   <object id="147" name="Spike" x="1472" y="544" width="416" height="32"/>
-  <object id="148" x="1472" y="576" width="448" height="64"/>
-  <object id="149" x="1888" y="480" width="32" height="96"/>
+  <object id="148" name="Terrain" x="1472" y="576" width="448" height="64"/>
+  <object id="149" name="Terrain" x="1888" y="480" width="32" height="96"/>
   <object id="151" name="Spike" x="1728" y="224" width="32" height="90"/>
-  <object id="152" x="1664" y="384" width="160" height="64"/>
-  <object id="153" x="2944" y="192" width="32" height="32"/>
+  <object id="152" name="Terrain" x="1664" y="384" width="160" height="64"/>
+  <object id="153" name="Terrain" x="2944" y="192" width="32" height="32"/>
   <object id="154" name="Spike" x="2944" y="160" width="32" height="32"/>
-  <object id="159" x="3808" y="352" width="32" height="64"/>
-  <object id="161" x="4224" y="352" width="32" height="64"/>
-  <object id="163" x="4864" y="352" width="32" height="64"/>
-  <object id="165" x="3808" y="416" width="1088"/>
+  <object id="159" name="Terrain" x="3808" y="352" width="32" height="64"/>
+  <object id="161" name="Terrain" x="4224" y="352" width="32" height="64"/>
+  <object id="163" name="Terrain" x="4864" y="352" width="32" height="64"/>
+  <object id="165" name="Terrain" x="3808" y="416" width="1088"/>
   <object id="166" name="Spike" x="3840" y="384" width="384"/>
   <object id="167" name="Spike" x="4256" y="384" width="608"/>
   <object id="168" name="Spike" x="4928" y="544" width="64" height="32"/>
-  <object id="169" x="4928" y="576" width="64" height="64"/>
+  <object id="169" name="Terrain" x="4928" y="576" width="64" height="64"/>
   <object id="176" name="Spike" x="5408" y="416" width="32" height="64"/>
-  <object id="177" x="5440" y="416" width="192" height="64"/>
+  <object id="177" name="Terrain" x="5440" y="416" width="192" height="64"/>
   <object id="178" name="Spike" x="5632" y="256" width="32" height="64"/>
-  <object id="179" x="5664" y="256" width="352" height="64"/>
-  <object id="185" x="7680" y="0" width="32" height="320"/>
+  <object id="179" name="Terrain" x="5664" y="256" width="352" height="64"/>
+  <object id="185" name="Terrain" x="7680" y="0" width="32" height="320"/>
   <object id="191" name="Spike" x="448" y="448">
    <polyline points="0,0 -6,0 -6,-2.00556 -7.99798,-2.00556 -31.9963,-14.0059 -31.9969,-18.0045 -7.99219,-29.995 -6.00497,-30.0028 -6.01278,-31.995 0,-32"/>
   </object>

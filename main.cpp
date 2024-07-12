@@ -1,4 +1,3 @@
-#include <SFML/Graphics.hpp>
 #include "Director.h"
 
 int main()
@@ -8,6 +7,7 @@ int main()
 
 	b2Vec2 gravity(0.0f, 980.0f);
 	b2World world(gravity);
+	world.SetContactListener(new GlobalContactListener());
 
 	Director director(world);
 

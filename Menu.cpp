@@ -3,6 +3,10 @@
 
 Menu::Menu()
 {
+	_mainMenuSelection = 0;
+	_selectedOption = -1;
+	_inMainMenu = true;
+
 	if (!_musicMenu.openFromFile("assets/sounds/MenuMusic.wav"))
 		return; // error
 
@@ -17,10 +21,6 @@ Menu::Menu()
 
 	_salirTexture.loadFromFile("assets/SALIR.png");
 	_salirSprite.setTexture(_salirTexture);
-
-	_mainMenuSelection = 0;
-	_selectedOption = -1;
-	_inMainMenu = true;
 }
 
 void Menu::update(sf::Event event) {

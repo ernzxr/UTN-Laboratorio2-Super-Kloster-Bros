@@ -1,16 +1,26 @@
+#pragma once
 #include "Gameplay.h"
-
-
 
 Gameplay::Gameplay(b2World& world) : _world(world)
 {
 	generateMap();
+	spawnStructures();
 	spawnPlayer();
 	spawnEnemies();
 }
 
+Gameplay::~Gameplay()
+{
+	delete _tiledMap;
+	delete _structures;
+	delete _player;
+	delete _enemySpawn;
+}
+
 void Gameplay::update()
 {
+	_world.Step(1.0f / 60, int32(10), int32(8));
+
 	// Restart the game with T
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
 		gameOver();
@@ -28,14 +38,10 @@ void Gameplay::update()
 	if (_player->isDead()) {
 		gameOver();
 	}
-	
-	_world.SetContactListener(new GlobalContactListener());
 }
 
 void Gameplay::render(sf::RenderWindow& window)
 {
-	_world.Step(1.0f / 60, int32(10), int32(8));
-
 	// Adjust the view to follow the player
 	sf::View view = window.getView();
 	sf::Vector2f playerPos = getCameraPosition();
@@ -67,6 +73,10 @@ void Gameplay::generateMap() {
 
 void Gameplay::spawnEnemies() {
 	_enemySpawn = new EnemySpawn(_world, _tiledMap->getMap());
+}
+
+void Gameplay::spawnStructures() {
+	_structures = new Structures(_world, _tiledMap->getMap());
 }
 
 void Gameplay::gameOver()

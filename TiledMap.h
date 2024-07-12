@@ -25,8 +25,6 @@ public:
 
     void render(sf::RenderWindow& window);
 
-    void createPhysics();
-
     void loadBackground();
 
     b2Vec2 getPlayerSpawnPoint();

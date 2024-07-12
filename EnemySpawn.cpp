@@ -29,8 +29,8 @@ void EnemySpawn::spawnEnemies()
 			{
 				tmx::Object::Shape shape = object.getShape();
 
-				if (shape == tmx::Object::Shape::Point) {
-					if (object.getName() == "Enemy") {
+				if (object.getName() == "Enemy") {
+					if (shape == tmx::Object::Shape::Point) {
 						tmx::Vector2f position = object.getPosition();
 						_enemies.push_back(new Enemy(_world, b2Vec2(position.x, position.y + 12.0f)));
 					}

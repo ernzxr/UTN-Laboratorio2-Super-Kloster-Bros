@@ -20,9 +20,12 @@ void Scene::update(sf::Event event){
         _menu->update(event);
         if (_menu->getSelectedOption() == 0) {
             _menu->close();
-            _play->restart();
+            _play->newGame();
             _play->open();
         }
+		else if (_menu->getSelectedOption() == 1) {
+			_menu->close();
+		}
         else if (_menu->getSelectedOption() == 2) {
             _menu->close();
         }
@@ -57,6 +60,7 @@ void Scene::render(sf::RenderWindow& window)
 	}
 	else if (_pause->getPaused())
 	{
+        _play->render(window);
 		_pause->render(window);
 	}
 	else if (_play->getPlay())
