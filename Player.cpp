@@ -41,7 +41,18 @@ Player::Player(b2World& world, b2Vec2 position) : _startingPosition(position)
 	b2shape.SetAsBox(0.1f, 0.4f, b2Vec2(0.50f, 0.0f), 0.0f);
 	fixtureDef.userData.pointer = (uintptr_t)&_fixtureData;
 	fixtureDef.isSensor = true;
-	_enemyFixture = _body->CreateFixture(&fixtureDef);
+	_rightEnemyFixture = _body->CreateFixture(&fixtureDef);
+
+	b2shape.SetAsBox(0.1f, 0.4f, b2Vec2(-0.50f, 0.0f), 0.0f);
+	fixtureDef.userData.pointer = (uintptr_t)&_fixtureData;
+	fixtureDef.isSensor = true;
+	_leftEnemyFixture = _body->CreateFixture(&fixtureDef);
+
+	//Top Ground Fixture
+	b2shape.SetAsBox(0.4f, 0.1f, b2Vec2(-0.0f, -1.0f), 0.0f);
+	fixtureDef.userData.pointer = (uintptr_t)&_fixtureData;
+	fixtureDef.isSensor = true;
+	_topFixture = _body->CreateFixture(&fixtureDef);
 
 
 	// Create SFML Sprite
@@ -110,7 +121,7 @@ void Player::cmd()
 				_isJumping = false;
 				_isFalling = false;
 			}
-			/*
+			
 			else if (_onRoof) {
 				_velocity.y = -5.0f;
 				_sprite->setTextureRect({ 64, 96, 32, 64 });
@@ -119,7 +130,7 @@ void Player::cmd()
 				_isFalling = false;
 				_onGround = false;
 			}
-			*/
+			
 		}
 	}
 
@@ -160,7 +171,7 @@ void Player::update()
 	_velocity.x = 0.0f;
 
 	if (_sprite->getPosition().y >= 700) {
-		// Caida al vacio
+		_death = true;
 	}
 }
 
@@ -169,11 +180,14 @@ void Player::render(sf::RenderWindow& window) {
 	_sprite->setRotation(_body->GetAngle() * deg_per_rad);
 	window.draw(*_sprite);
 
+	/*
 	// Dibujar los fixtures para depuración
 	drawFixture(_spikeFixture, window, sf::Color(255, 0, 0, 100)); // Rojo
 	drawFixture(_groundFixture, window, sf::Color(0, 255, 0, 100)); // Verde
-	drawFixture(_enemyFixture, window, sf::Color(0, 0, 255, 100)); // Azul
-
+	drawFixture(_rightEnemyFixture, window, sf::Color(0, 0, 255, 100)); // Azul
+	drawFixture(_leftEnemyFixture, window, sf::Color(0, 0, 255, 100)); // Azul
+	drawFixture(_topFixture, window, sf::Color(255, 165, 0, 100)); // Naranja
+	*/
 }
 
 void Player::drawFixture(b2Fixture* fixture, sf::RenderWindow& window, sf::Color color) {
@@ -201,14 +215,15 @@ void Player::onBeginContact(b2Fixture* self, b2Fixture* other)
 	}
 
 	if (_spikeFixture == self && data->type == FixtureDataType::Spike) {
+		_death = true;
 	}
 	else if (_groundFixture == self && data->type == FixtureDataType::GroundTile) {
 		_onGround = true;
 	}
-	else if (_groundFixture == self && data->type == FixtureDataType::Enemy) {
-		//_onGround = true;
+	else if (self == _topFixture && data->type == FixtureDataType::GroundTile) {
+		_onRoof = true;
 	}
-	else if(self == _enemyFixture && data->type == FixtureDataType::Enemy) {
+	else if((self == _rightEnemyFixture || self == _leftEnemyFixture) && data->type == FixtureDataType::Enemy) {
 		_death = true;
 	}
 	else if (self != _groundFixture && self != _spikeFixture && data->type == FixtureDataType::Enemy) {
@@ -224,17 +239,14 @@ void Player::onEndContact(b2Fixture* self, b2Fixture* other)
 		return;
 	}
 
-	if (_spikeFixture == self && data->type == FixtureDataType::Spike) {
-	}
 	else if (_groundFixture == self && data->type == FixtureDataType::GroundTile) {
 		_onGround = false;
 	}
+	else if (self == _topFixture && data->type == FixtureDataType::GroundTile) {
+		_onRoof = false;
+	}
 	else if (self != _groundFixture && self != _spikeFixture && self == self && data->type == FixtureDataType::Enemy) {
 		_onGround = false;
-	}
-	else if (self != _groundFixture && self != _spikeFixture && self == _enemyFixture && data->type == FixtureDataType::Enemy) {
-		// Si el contacto no es con los sensores, maneja el final de la colisión con el cuerpo principal del enemigo.
-		
 	}
 
 }

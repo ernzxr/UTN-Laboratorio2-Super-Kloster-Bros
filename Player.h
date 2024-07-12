@@ -43,11 +43,14 @@ private:
 
 	bool _onGround = false;
 	bool _death = false;
+	bool _onRoof = false;
 
 	FixtureData _fixtureData;
 	b2Fixture* _groundFixture;
 	b2Fixture* _spikeFixture;
-	b2Fixture* _enemyFixture;
+	b2Fixture* _rightEnemyFixture;
+	b2Fixture* _leftEnemyFixture;
+	b2Fixture* _topFixture;
 public:
 	Player(b2World& world, b2Vec2 position);
 

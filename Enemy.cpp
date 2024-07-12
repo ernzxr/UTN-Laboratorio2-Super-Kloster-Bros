@@ -109,3 +109,4 @@ void Enemy::onEndContact(b2Fixture* self, b2Fixture* other)
 {
     FixtureData* data = (FixtureData*)other->GetUserData().pointer;
 }
+
