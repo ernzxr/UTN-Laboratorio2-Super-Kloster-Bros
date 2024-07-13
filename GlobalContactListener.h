@@ -15,7 +15,7 @@ enum class FixtureDataType {
 	GroundTile,
 	Enemy,
 	Spike,
-	EnemyHead,
+	DestroyableTile,
 };
 
 struct FixtureData {

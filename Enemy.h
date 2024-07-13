@@ -23,6 +23,7 @@ private:
 
 	FixtureData _fixtureData;
 
+	bool _isHit = false;
 	bool _isDead = false;
 	float _deathTimer = 0.0f;
 public:
@@ -33,6 +34,7 @@ public:
 	void update();
 
 	void render(sf::RenderWindow& window);
+	bool isDead();
 
 	virtual void onBeginContact(b2Fixture* self, b2Fixture* other) override;
 	virtual void onEndContact(b2Fixture* self, b2Fixture* other) override;

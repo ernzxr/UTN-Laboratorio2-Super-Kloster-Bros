@@ -10,10 +10,10 @@
     "fileStates": {
         "Map.tmx": {
             "scale": 1.5,
-            "selectedLayer": 2,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 1982.6666666666665,
-                "y": 464
+                "x": 512.3333333333334,
+                "y": 592.3333333333333
             }
         },
         "main.tsx": {

@@ -83,6 +83,14 @@ void Structures::spawnTerrains()
 						_terrains.push_back(new Terrain(_world, b2Vec2(position.x, position.y), object.getPoints(), shape));
 					}
 				}
+				else if (object.getName() == "DestroyableTerrain") {
+					tmx::Vector2f position = object.getPosition();
+
+					float width = object.getAABB().width;
+					float height = object.getAABB().height;
+
+					_destroyableTerrains.push_back(new DestroyableTerrain(_world, b2Vec2(position.x, position.y), width, height));
+				}
 			}
 		}
 	}
@@ -96,4 +104,9 @@ std::vector<Obstacle*>& Structures::getObstacles()
 std::vector<Terrain*>& Structures::getTerrains()
 {
 	return _terrains;
+}
+
+std::vector<DestroyableTerrain*>& Structures::getDestroyableTerrains()
+{
+	return _destroyableTerrains;
 }

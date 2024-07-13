@@ -29,10 +29,24 @@ void Gameplay::update()
 	_player->cmd();
 	_player->update();
 
+
 	// Update Enemies
 	auto& enemies = _enemySpawn->getEnemies();
+	std::vector<Enemy*> enemiesToRemove;
 	for (auto enemy : enemies) {
 		enemy->update();
+		if (enemy->isDead()) {
+			enemiesToRemove.push_back(enemy);
+		}
+	}
+
+	for (auto enemy : enemiesToRemove) {
+		enemies.erase(std::remove(enemies.begin(), enemies.end(), enemy), enemies.end());
+		delete enemy;
+	}
+
+	for (auto& terrain : _structures->getDestroyableTerrains()) {
+		terrain->update();
 	}
 
 	if (_player->isDead()) {

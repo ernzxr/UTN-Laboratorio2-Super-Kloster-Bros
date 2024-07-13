@@ -43,7 +43,11 @@ Enemy::Enemy(b2World& world, b2Vec2 position)
 
 Enemy::~Enemy()
 {
-    _body->GetWorld()->DestroyBody(_body);
+    //_body->GetWorld()->DestroyBody(_body);
+    if (_body) {
+        _body->GetWorld()->DestroyBody(_body);
+        _body = nullptr;
+    }
 }
 
 void Enemy::update()
@@ -74,14 +78,15 @@ void Enemy::update()
     _body->SetLinearVelocity(_velocity);
 
 
-    if (_isDead) {
+    if (_isHit) {
         _deathTimer += 0.07f;
         _sprite->setTextureRect({ 112, 208, 32, 16 });
 
         _sprite->setOrigin(_sprite->getGlobalBounds().width / 2.0f, _sprite->getGlobalBounds().height * -1.0f);
 
         if (_deathTimer >= 1) {
-            _body->SetTransform(b2Vec2(_body->GetPosition().x, 1000.0f / pixels_per_meter), _body->GetAngle());
+            //body->SetTransform(b2Vec2(_body->GetPosition().x, 1000.0f / pixels_per_meter), _body->GetAngle());
+            _isDead = true;
             _deathTimer = 0.0f;
             return;
         }
@@ -100,7 +105,7 @@ void Enemy::onBeginContact(b2Fixture* self, b2Fixture* other)
     FixtureData* data = (FixtureData*)other->GetUserData().pointer;
 
     if(data->type == FixtureDataType::Player) {
-        _isDead = true;
+        _isHit = true;
 
     }
 }
@@ -110,3 +115,6 @@ void Enemy::onEndContact(b2Fixture* self, b2Fixture* other)
     FixtureData* data = (FixtureData*)other->GetUserData().pointer;
 }
 
+bool Enemy::isDead() {
+    return _isDead;
+}
