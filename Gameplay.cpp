@@ -32,17 +32,12 @@ void Gameplay::update()
 
 	// Update Enemies
 	auto& enemies = _enemySpawn->getEnemies();
-	std::vector<Enemy*> enemiesToRemove;
 	for (auto enemy : enemies) {
 		enemy->update();
 		if (enemy->isDead()) {
-			enemiesToRemove.push_back(enemy);
+			enemies.erase(std::remove(enemies.begin(), enemies.end(), enemy), enemies.end());
+			delete enemy;
 		}
-	}
-
-	for (auto enemy : enemiesToRemove) {
-		enemies.erase(std::remove(enemies.begin(), enemies.end(), enemy), enemies.end());
-		delete enemy;
 	}
 
 	for (auto& terrain : _structures->getDestroyableTerrains()) {
