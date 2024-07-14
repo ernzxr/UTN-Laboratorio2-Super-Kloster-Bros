@@ -78,6 +78,12 @@ void Gameplay::render(sf::RenderWindow& window)
 	for (auto enemy : enemies) {
 		enemy->render(window);
 	}
+
+	auto& destroyableTerrains = _destroyableTerrainSpawn->getDestroyableTerrains();
+	for (auto& terrain : destroyableTerrains) {
+		terrain->render(window);
+	}
+
 }
 
 void Gameplay::spawnPlayer() {
