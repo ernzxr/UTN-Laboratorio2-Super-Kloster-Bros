@@ -44,11 +44,15 @@ void Gameplay::update()
 
 	
 	auto& destroyableTerrains = _destroyableTerrainSpawn->getDestroyableTerrains();
-	for (auto& terrain : destroyableTerrains) {
-		terrain->update();
-		if (terrain->isDestroyed()) {
-			destroyableTerrains.erase(std::remove(destroyableTerrains.begin(), destroyableTerrains.end(), terrain), destroyableTerrains.end());
-			delete terrain;
+	auto it = destroyableTerrains.begin();
+	while (it != destroyableTerrains.end()) {
+		(*it)->update();
+		if ((*it)->isDestroyed()) {
+			delete* it;
+			it = destroyableTerrains.erase(it);  // Borra el elemento y avanza al siguiente válido.
+		}
+		else {
+			++it;  // Avanza al siguiente elemento.
 		}
 	}
 	
