@@ -217,7 +217,7 @@ void Player::onBeginContact(b2Fixture* self, b2Fixture* other)
 	if (_spikeFixture == self && data->type == FixtureDataType::Spike) {
 		_death = true;
 	}
-	else if (_groundFixture == self && data->type == FixtureDataType::GroundTile) {
+	else if (_groundFixture == self && (data->type == FixtureDataType::GroundTile || data->type == FixtureDataType::DestroyableTile)) {
 		_onGround = true;
 	}
 	else if (self == _topFixture && data->type == FixtureDataType::GroundTile) {
@@ -239,7 +239,7 @@ void Player::onEndContact(b2Fixture* self, b2Fixture* other)
 		return;
 	}
 
-	else if (_groundFixture == self && data->type == FixtureDataType::GroundTile) {
+	else if (_groundFixture == self && (data->type == FixtureDataType::GroundTile || data->type == FixtureDataType::DestroyableTile)) {
 		_onGround = false;
 	}
 	else if (self == _topFixture && data->type == FixtureDataType::GroundTile) {

@@ -7,6 +7,7 @@ Gameplay::Gameplay(b2World& world) : _world(world)
 	spawnStructures();
 	spawnPlayer();
 	spawnEnemies();
+	spawnDestroyableTerrains();
 }
 
 Gameplay::~Gameplay()
@@ -15,6 +16,7 @@ Gameplay::~Gameplay()
 	delete _structures;
 	delete _player;
 	delete _enemySpawn;
+	delete _destroyableTerrainSpawn;
 }
 
 void Gameplay::update()
@@ -40,10 +42,16 @@ void Gameplay::update()
 		}
 	}
 
-	for (auto& terrain : _structures->getDestroyableTerrains()) {
+	
+	auto& destroyableTerrains = _destroyableTerrainSpawn->getDestroyableTerrains();
+	for (auto& terrain : destroyableTerrains) {
 		terrain->update();
+		if (terrain->isDestroyed()) {
+			destroyableTerrains.erase(std::remove(destroyableTerrains.begin(), destroyableTerrains.end(), terrain), destroyableTerrains.end());
+			delete terrain;
+		}
 	}
-
+	
 	if (_player->isDead()) {
 		gameOver();
 	}
@@ -88,8 +96,16 @@ void Gameplay::spawnStructures() {
 	_structures = new Structures(_world, _tiledMap->getMap());
 }
 
+void Gameplay::spawnDestroyableTerrains() {
+	_destroyableTerrainSpawn = new DestroyableTerrainSpawn(_world, _tiledMap->getMap());
+}
+
 void Gameplay::gameOver()
 {
+	
+	delete _destroyableTerrainSpawn;
+	spawnDestroyableTerrains();
+	
 	delete _player;
 	spawnPlayer();
 

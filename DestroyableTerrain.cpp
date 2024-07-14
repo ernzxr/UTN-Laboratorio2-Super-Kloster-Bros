@@ -1,4 +1,5 @@
 #include "DestroyableTerrain.h"
+#include <iostream>
 
 DestroyableTerrain::DestroyableTerrain(b2World& world, b2Vec2 position, float width, float height)
 {
@@ -16,6 +17,7 @@ DestroyableTerrain::DestroyableTerrain(b2World& world, b2Vec2 position, float wi
 
 	// Type of Fixture Data
 	_fixtureData = new FixtureData();
+	_fixtureData->listener = this;
 	_fixtureData->type = FixtureDataType::DestroyableTile;
 	_fixtureData->mapX = position.x;
 	_fixtureData->mapY = position.y;
@@ -33,35 +35,47 @@ DestroyableTerrain::DestroyableTerrain(b2World& world, b2Vec2 position, float wi
 
 void DestroyableTerrain::update()
 {
-	if (_isDestroyed) {
+	if (_isStarting) {
 		_fallTimer += 0.1f;
 
 		if (_fallTimer >= 2) {
-			_body->SetTransform(b2Vec2(_body->GetPosition().x, 1000.0f / pixels_per_meter), _body->GetAngle());
 			_fallTimer = 0.0f;
-			_body->GetWorld()->DestroyBody(_body);
-			_body = nullptr;
+			_isDestroyed = true;	
 			return;
 		}
 	}
-
 }
 
 void DestroyableTerrain::onBeginContact(b2Fixture* self, b2Fixture* other)
 {
 	FixtureData* data = (FixtureData*)other->GetUserData().pointer;
 
-	if (data->type == FixtureDataType::Player) {
-		_isDestroyed = true;
+	if (data && data->type == FixtureDataType::Player) {
+		//std::cout << "Player collided with DestroyableTerrain." << std::endl;
+		_isStarting = true;
 	}
 }
 
 void DestroyableTerrain::onEndContact(b2Fixture* self, b2Fixture* other)
 {
 	FixtureData* data = (FixtureData*)other->GetUserData().pointer;
+
+	if (data && data->type == FixtureDataType::Player) {
+		_isStarting = false;
+		_fallTimer += -0.1f;
+	}
 }
+
 
 DestroyableTerrain::~DestroyableTerrain()
 {
 	_body->GetWorld()->DestroyBody(_body);
+}
+
+bool DestroyableTerrain::isDestroyed() {
+	return _isDestroyed;
+}
+
+void DestroyableTerrain::resetGround(bool isDestroyed) {
+	_isDestroyed = isDestroyed;
 }

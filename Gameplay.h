@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "EnemySpawn.h"
+#include "DestroyableTerrain.h"
+#include "DestroyableTerrainSpawn.h"
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 #include "Structures.h"
@@ -16,6 +18,7 @@ private:
 	Player* _player;
 	EnemySpawn* _enemySpawn;
 	Structures* _structures;
+	DestroyableTerrainSpawn* _destroyableTerrainSpawn;
 public:
 	Gameplay(b2World& world);
 
@@ -36,6 +39,8 @@ public:
 	void spawnEnemies();
 
 	void spawnStructures();
+
+	void spawnDestroyableTerrains();
 
 	sf::Vector2f getCameraPosition();
 };

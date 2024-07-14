@@ -66,6 +66,9 @@
     <ClCompile Include="DestroyableTerrain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DestroyableTerrainSpawn.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -117,6 +120,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DestroyableTerrain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DestroyableTerrainSpawn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
