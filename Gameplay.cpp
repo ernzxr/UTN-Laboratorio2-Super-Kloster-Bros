@@ -110,19 +110,6 @@ void Gameplay::update()
 			_deathScreenOpacity = 0;
 		}
 	}
-
-	/*
-	if (_player->isDead()) {
-		_tries++;
-		if (_tries > 3) {
-			//gameOver();
-			respawn();
-		}
-		else {
-			respawn();
-		}
-	}
-	*/
 }
 
 void Gameplay::render(sf::RenderWindow& window)
@@ -157,14 +144,6 @@ void Gameplay::render(sf::RenderWindow& window)
 		terrain->render(window);
 	}
 
-	/*
-	sf::Vector2u windowSize = window.getSize();
-	_deathScreen->setSize(sf::Vector2f(windowSize.x, windowSize.y));
-	_deathScreen->setFillColor(sf::Color(0, 0, 0, 255)); // Inicialmente transparente
-
-	window.draw(*_deathScreen);
-	*/
-
 	if (_isPlayerDead) {
 		sf::Vector2u windowSize = window.getSize();
 		_deathScreen->setSize(sf::Vector2f(windowSize.x + 200, windowSize.y + 4000));
@@ -172,12 +151,6 @@ void Gameplay::render(sf::RenderWindow& window)
 	}
 }
 
-void Gameplay::playDeathScreen() 
-{
-
-	
-
-}
 void Gameplay::spawnPlayer() {
 	_player = new Player(_world, _tiledMap->getPlayerSpawnPoint());
 }

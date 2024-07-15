@@ -56,8 +56,6 @@ public:
 
 	void spawnDestroyableTerrains();
 
-	void playDeathScreen();
-
 	bool isGameFinished() const;
 
 	sf::Vector2f getCameraPosition();

@@ -220,7 +220,7 @@ void Player::onBeginContact(b2Fixture* self, b2Fixture* other)
 	else if (_groundFixture == self && (data->type == FixtureDataType::GroundTile || data->type == FixtureDataType::DestroyableTile)) {
 		_onGround = true;
 	}
-	else if (self == _topFixture && data->type == FixtureDataType::GroundTile) {
+	else if (self == _topFixture && (data->type == FixtureDataType::GroundTile || data->type == FixtureDataType::DestroyableTile)) {
 		_onRoof = true;
 	}
 	else if((self == _rightEnemyFixture || self == _leftEnemyFixture) && data->type == FixtureDataType::Enemy) {
