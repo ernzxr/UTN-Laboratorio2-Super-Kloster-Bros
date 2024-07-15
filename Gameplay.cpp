@@ -10,6 +10,7 @@ Gameplay::Gameplay(b2World& world) : _world(world)
 	spawnEnemies();
 	spawnDestroyableTerrains();
 	spawnCollectables();
+	_deathScreen = new sf::RectangleShape;
 }
 
 Gameplay::~Gameplay()
@@ -20,6 +21,7 @@ Gameplay::~Gameplay()
 	delete _enemySpawn;
 	delete _destroyableTerrainSpawn;
 	delete _collectables;
+	delete _deathScreen;
 }
 
 void Gameplay::update()
@@ -77,14 +79,50 @@ void Gameplay::update()
 	}
 
 	if (_player->isDead()) {
+		_isPlayerDead = true;
+	}
+
+	if (_isPlayerDead) {
+		if (_deathScreenOpacity < 255) {
+			_deathScreenOpacity += 15;  // Incrementa la opacidad gradualmente
+		}
+		_deathScreen->setFillColor(sf::Color(0, 0, 0, _deathScreenOpacity));
+
+		// Asegura que la pantalla de muerte esté centrada en la posición del jugador
+		sf::Vector2f playerPos = getCameraPosition();
+		playerPos.x -= _deathScreen->getSize().x / 2 - 150;
+		playerPos.y -= _deathScreen->getSize().y / 2;
+		_deathScreen->setPosition(playerPos);
+	}
+
+	// Respawn logic
+	if (_isPlayerDead && _deathScreenOpacity >= 255) {
 		_tries++;
 		if (_tries > 3) {
-			gameOver();
+			//gameOver();
+			respawn();
+			_isPlayerDead = false;
+			_deathScreenOpacity = 0;
+		}
+		else {
+			respawn();
+			_isPlayerDead = false;
+			_deathScreenOpacity = 0;
+		}
+	}
+
+	/*
+	if (_player->isDead()) {
+		_tries++;
+		if (_tries > 3) {
+			//gameOver();
+			respawn();
 		}
 		else {
 			respawn();
 		}
 	}
+	*/
 }
 
 void Gameplay::render(sf::RenderWindow& window)
@@ -118,8 +156,28 @@ void Gameplay::render(sf::RenderWindow& window)
 	for (auto& terrain : destroyableTerrains) {
 		terrain->render(window);
 	}
+
+	/*
+	sf::Vector2u windowSize = window.getSize();
+	_deathScreen->setSize(sf::Vector2f(windowSize.x, windowSize.y));
+	_deathScreen->setFillColor(sf::Color(0, 0, 0, 255)); // Inicialmente transparente
+
+	window.draw(*_deathScreen);
+	*/
+
+	if (_isPlayerDead) {
+		sf::Vector2u windowSize = window.getSize();
+		_deathScreen->setSize(sf::Vector2f(windowSize.x + 200, windowSize.y + 4000));
+		window.draw(*_deathScreen);
+	}
 }
 
+void Gameplay::playDeathScreen() 
+{
+
+	
+
+}
 void Gameplay::spawnPlayer() {
 	_player = new Player(_world, _tiledMap->getPlayerSpawnPoint());
 }
@@ -178,3 +236,4 @@ sf::Vector2f Gameplay::getCameraPosition()
 {
 	return _player->getPosition();
 }
+

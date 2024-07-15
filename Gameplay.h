@@ -25,6 +25,10 @@ private:
 	int _totalPoints = 0;
 	int _tries = 1;
 	bool _gameFinished = false;
+
+	sf::RectangleShape* _deathScreen;
+	int _deathScreenOpacity = 0;
+	bool _isPlayerDead = false;
 public:
 	Gameplay(b2World& world);
 
@@ -51,6 +55,8 @@ public:
 	void spawnStructures();
 
 	void spawnDestroyableTerrains();
+
+	void playDeathScreen();
 
 	bool isGameFinished() const;
 

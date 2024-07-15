@@ -57,7 +57,7 @@ void DestroyableTerrain::update()
 	if (_isStarting) {
 		_fallTimer += 0.1f;
 
-		if (_fallTimer >= 2) {
+		if (_fallTimer >= 3) {
 			_fallTimer = 0.0f;
 			_isDestroyed = true;	
 			return;
