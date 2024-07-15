@@ -32,6 +32,16 @@ DestroyableTerrain::DestroyableTerrain(b2World& world, b2Vec2 position, float wi
 	// Attach Shape to Body
 	_body->CreateFixture(&fixtureDef);
 
+	b2PolygonShape bottomSensor;
+	bottomSensor.SetAsBox(width / 2.0f / pixels_per_meter, 0.05f, b2Vec2(0.0f, height / 2.0f / pixels_per_meter - 0.05f), 0.0f);
+
+	b2FixtureDef sensorFixtureDef;
+	sensorFixtureDef.shape = &bottomSensor;
+	sensorFixtureDef.isSensor = true;  // Marcamos este fixture como sensor
+	sensorFixtureDef.userData.pointer = (uintptr_t)(_fixtureData);  // Asignamos datos de usuario si es necesario
+	_body->CreateFixture(&sensorFixtureDef);
+
+
 	_texture.loadFromFile("assets/SpriteSheetTimesTwo.png");
 	_startTile = new sf::Sprite();
 	_middleTile = new sf::Sprite();
@@ -113,7 +123,7 @@ void DestroyableTerrain::onBeginContact(b2Fixture* self, b2Fixture* other)
 {
 	FixtureData* data = (FixtureData*)other->GetUserData().pointer;
 
-	if (data && data->type == FixtureDataType::Player) {
+	if (_topFixture != self && data && data->type == FixtureDataType::Player) {
 		//std::cout << "Player collided with DestroyableTerrain." << std::endl;
 		_isStarting = true;
 	}

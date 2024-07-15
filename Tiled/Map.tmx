@@ -85,7 +85,6 @@
   </object>
   <object id="258" name="Terrain" x="1088" y="416" width="64" height="96"/>
   <object id="279" name="DestroyableTerrain" x="416" y="576" width="192" height="32"/>
-  <object id="289" name="DestroyableTerrain" x="640" y="512" width="160" height="32"/>
   <object id="291" name="DestroyableTerrain" x="2432" y="544" width="224" height="32"/>
   <object id="292" name="DestroyableTerrain" x="2688" y="480" width="160" height="32"/>
   <object id="293" name="DestroyableTerrain" x="2496" y="384" width="128" height="32"/>
