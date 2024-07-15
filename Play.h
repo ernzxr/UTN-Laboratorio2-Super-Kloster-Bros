@@ -26,6 +26,8 @@ public:
 
 	void newGame();
 
+	bool isGameFinished();
+
 	void createGameplay();
 
 	void open();

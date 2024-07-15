@@ -11,6 +11,10 @@ Scene::Scene(b2World& world)
 void Scene::update() {
     if (_play->getPlay()) {
         _play->update();
+        if (_play->isGameFinished()) {
+            _play->close();
+            _menu->open();
+        }
     }
 }
 
@@ -50,6 +54,7 @@ void Scene::update(sf::Event event){
             _pause->open();
         }
     }
+    
 }
 
 void Scene::render(sf::RenderWindow& window)

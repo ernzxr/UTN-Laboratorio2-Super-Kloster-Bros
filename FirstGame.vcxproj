@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Collectable.cpp" />
     <ClCompile Include="DestroyableTerrain.cpp" />
     <ClCompile Include="DestroyableTerrainSpawn.cpp" />
     <ClCompile Include="Director.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Play.cpp" />
     <ClCompile Include="Rank.cpp" />
+    <ClCompile Include="Star.cpp" />
     <ClCompile Include="Structures.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="TiledMap.cpp" />
@@ -159,6 +161,7 @@
     <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Collectable.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="DestroyableTerrain.h" />
     <ClInclude Include="DestroyableTerrainSpawn.h" />
@@ -170,6 +173,7 @@
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Play.h" />
     <ClInclude Include="Rank.h" />
+    <ClInclude Include="Star.h" />
     <ClInclude Include="Structures.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="TiledMap.h" />

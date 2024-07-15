@@ -106,7 +106,6 @@ void Enemy::onBeginContact(b2Fixture* self, b2Fixture* other)
 
     if(data->type == FixtureDataType::Player) {
         _isHit = true;
-
     }
 }
 

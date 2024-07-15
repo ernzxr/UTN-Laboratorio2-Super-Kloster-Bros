@@ -1,5 +1,6 @@
 #pragma once
 #include "Gameplay.h"
+#include <iostream>
 
 Gameplay::Gameplay(b2World& world) : _world(world)
 {
@@ -8,6 +9,7 @@ Gameplay::Gameplay(b2World& world) : _world(world)
 	spawnPlayer();
 	spawnEnemies();
 	spawnDestroyableTerrains();
+	spawnCollectables();
 }
 
 Gameplay::~Gameplay()
@@ -17,6 +19,7 @@ Gameplay::~Gameplay()
 	delete _player;
 	delete _enemySpawn;
 	delete _destroyableTerrainSpawn;
+	delete _collectables;
 }
 
 void Gameplay::update()
@@ -25,12 +28,11 @@ void Gameplay::update()
 
 	// Restart the game with T
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
-		gameOver();
+		respawn();
 	}
 
 	_player->cmd();
 	_player->update();
-
 
 	// Update Enemies
 	auto& enemies = _enemySpawn->getEnemies();
@@ -41,7 +43,6 @@ void Gameplay::update()
 			delete enemy;
 		}
 	}
-
 	
 	auto& destroyableTerrains = _destroyableTerrainSpawn->getDestroyableTerrains();
 	auto it = destroyableTerrains.begin();
@@ -56,8 +57,33 @@ void Gameplay::update()
 		}
 	}
 	
+	// End the game if the player is dead or if the player wins
+	auto& stars = _collectables->getCollectables();
+	for (auto star : stars) {
+		star->update();
+		if (star->isCollected()) {
+			if (star->isWinStar()) {
+				_totalPoints += star->getPoints();
+				stars.erase(std::remove(stars.begin(), stars.end(), star), stars.end());
+				delete star;
+				gameWin();
+			}
+			else {
+				_totalPoints += star->getPoints();
+				stars.erase(std::remove(stars.begin(), stars.end(), star), stars.end());
+				delete star;
+			}
+		}
+	}
+
 	if (_player->isDead()) {
-		gameOver();
+		_tries++;
+		if (_tries > 3) {
+			gameOver();
+		}
+		else {
+			respawn();
+		}
 	}
 }
 
@@ -83,11 +109,15 @@ void Gameplay::render(sf::RenderWindow& window)
 		enemy->render(window);
 	}
 
+	auto& stars = _collectables->getCollectables();
+	for (auto star : stars) {
+		star->render(window);
+	}
+
 	auto& destroyableTerrains = _destroyableTerrainSpawn->getDestroyableTerrains();
 	for (auto& terrain : destroyableTerrains) {
 		terrain->render(window);
 	}
-
 }
 
 void Gameplay::spawnPlayer() {
@@ -102,6 +132,11 @@ void Gameplay::spawnEnemies() {
 	_enemySpawn = new EnemySpawn(_world, _tiledMap->getMap());
 }
 
+void Gameplay::spawnCollectables()
+{
+	_collectables = new Collectable(_world, _tiledMap->getMap());
+}
+
 void Gameplay::spawnStructures() {
 	_structures = new Structures(_world, _tiledMap->getMap());
 }
@@ -110,9 +145,13 @@ void Gameplay::spawnDestroyableTerrains() {
 	_destroyableTerrainSpawn = new DestroyableTerrainSpawn(_world, _tiledMap->getMap());
 }
 
-void Gameplay::gameOver()
+bool Gameplay::isGameFinished() const
 {
-	
+	return _gameFinished;
+}
+
+void Gameplay::respawn()
+{
 	delete _destroyableTerrainSpawn;
 	spawnDestroyableTerrains();
 	
@@ -123,8 +162,16 @@ void Gameplay::gameOver()
 	spawnEnemies();
 }
 
+void Gameplay::gameOver()
+{
+	std::cout<<"Game Over!"<<std::endl;
+	_gameFinished = true;
+}
+
 void Gameplay::gameWin()
 {
+	std::cout<<"You win!"<<std::endl;
+	_gameFinished = true;
 }
 
 sf::Vector2f Gameplay::getCameraPosition()

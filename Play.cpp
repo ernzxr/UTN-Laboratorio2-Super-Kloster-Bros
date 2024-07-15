@@ -49,6 +49,11 @@ void Play::newGame() {
 	createGameplay();
 }
 
+bool Play::isGameFinished()
+{
+	return _gameplay->isGameFinished();
+}
+
 void Play::open()
 {
 	_pause = false;

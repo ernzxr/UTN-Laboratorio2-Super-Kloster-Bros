@@ -34,6 +34,7 @@ public:
 	void update();
 
 	void render(sf::RenderWindow& window);
+
 	bool isDead();
 
 	virtual void onBeginContact(b2Fixture* self, b2Fixture* other) override;
