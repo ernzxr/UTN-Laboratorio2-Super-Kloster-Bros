@@ -89,7 +89,7 @@ void Player::cmd()
 	}
 
 	if (!_didJump) {
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && _onGround) {
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))&& _onGround) {
 			_buffer.loadFromFile("assets/sounds/smw_jump.wav");
 			_sound.setBuffer(_buffer);
 			_sound.play();
