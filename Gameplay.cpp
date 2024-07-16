@@ -11,6 +11,16 @@ Gameplay::Gameplay(b2World& world) : _world(world)
 	spawnDestroyableTerrains();
 	spawnCollectables();
 	_deathScreen = new sf::RectangleShape;
+
+	_lifesTexture.loadFromFile("assets/lifes.png");
+	_lifesSprite.setTexture(_lifesTexture);
+
+	_font.loadFromFile("assets/SuperMario256.ttf");
+	_pointsText.setFont(_font);
+	_pointsText.setCharacterSize(24); // Tamaño en píxeles, no puntos.
+	_pointsText.setFillColor(sf::Color::White);
+	_pointsText.setOutlineThickness(2);
+	_pointsText.setOutlineColor(sf::Color::Black);
 }
 
 Gameplay::~Gameplay()
@@ -78,6 +88,31 @@ void Gameplay::update()
 		}
 	}
 
+	int lifesWidth = 177;
+	int lifesHeight = 32;
+
+	switch (_lifes) {
+	case 5:
+		_lifesSprite.setTextureRect({ 24, 22 + lifesHeight * 0, lifesWidth, lifesHeight });
+		break;
+	case 4:
+		_lifesSprite.setTextureRect({ 24, 22 + lifesHeight * 1, lifesWidth, lifesHeight });
+		break;
+	case 3:
+		_lifesSprite.setTextureRect({ 24, 22 + lifesHeight * 2, lifesWidth, lifesHeight });
+		break;
+	case 2:
+		_lifesSprite.setTextureRect({ 24, 22 + lifesHeight * 3, lifesWidth, lifesHeight });
+		break;
+	case 1:
+		_lifesSprite.setTextureRect({ 24, 22 + lifesHeight * 4, lifesWidth, lifesHeight });
+		break;
+	default:
+		break;
+	}
+
+	_pointsText.setString(std::to_string(_totalPoints));
+
 	if (_player->isDead()) {
 		_isPlayerDead = true;
 	}
@@ -97,12 +132,9 @@ void Gameplay::update()
 
 	// Respawn logic
 	if (_isPlayerDead && _deathScreenOpacity >= 255) {
-		_tries++;
-		if (_tries > 5) {
+		_lifes--;
+		if (_lifes < 1) {
 			gameOver();
-			respawn();
-			_isPlayerDead = false;
-			_deathScreenOpacity = 0;
 		}
 		else {
 			respawn();
@@ -143,6 +175,17 @@ void Gameplay::render(sf::RenderWindow& window)
 	for (auto& terrain : destroyableTerrains) {
 		terrain->render(window);
 	}
+
+	// Ajustar la posición del sprite de las vidas para que siempre esté en la esquina superior izquierda de la vista
+	sf::Vector2f viewCorner = window.mapPixelToCoords(sf::Vector2i(0, 0), view);
+	_lifesSprite.setPosition(viewCorner.x + 15, viewCorner.y + 15);
+
+	window.draw(_lifesSprite);
+
+	// Ajusta la posición del texto del puntaje
+	_pointsText.setPosition(viewCorner.x + 15, viewCorner.y + 50); // Ejemplo de posición
+
+	window.draw(_pointsText);
 
 	if (_isPlayerDead) {
 		sf::Vector2u windowSize = window.getSize();
@@ -195,12 +238,14 @@ void Gameplay::respawn()
 
 void Gameplay::gameOver()
 {
+	_totalPoints += _lifes * 100;
 	std::cout<<"Game Over!"<<std::endl;
 	_gameFinished = true;
 }
 
 void Gameplay::gameWin()
 {
+	_totalPoints += _lifes * 100;
 	std::cout<<"You win!"<<std::endl;
 	_gameFinished = true;
 }

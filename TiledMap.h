@@ -20,6 +20,8 @@ private:
     sf::Texture _tileset;
     sf::Texture _bgTexture;
     sf::Sprite _bgSprite;
+    sf::Texture _uniTexture;
+    sf::Sprite _uniSprite;
 public:
     TiledMap(b2World& world);
 

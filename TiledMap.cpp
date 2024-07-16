@@ -21,22 +21,33 @@ void TiledMap::loadBackground() {
 		if (layer->getType() == tmx::Layer::Type::Image)
 		{
 			const auto& imageLayer = layer->getLayerAs<tmx::ImageLayer>();
+			if (imageLayer.getName() == "Background") {
+				if (!_bgTexture.loadFromFile("assets/bg.jpg"))
+				{
+					std::cerr << "Failed to load image layer" << std::endl;
+					continue;
+				}
+				// Habilitar la repetición de la textura en el eje X (y Y si es necesario)
+				_bgTexture.setRepeated(true);
 
-			if (!_bgTexture.loadFromFile("assets/bg.jpg"))
-			{
-				std::cerr << "Failed to load image layer" << std::endl;
-				continue;
+				_bgSprite.setTexture(_bgTexture);
+				// Ajustar el tamaño del sprite para que sea más grande que la textura si quieres que se repita
+				// Aquí, como ejemplo, se establece el tamaño del sprite al doble de la textura original en X
+				_bgSprite.setTextureRect(sf::IntRect(0, 0, _bgTexture.getSize().x * 5, _bgTexture.getSize().y));
+
+				_bgSprite.setPosition(imageLayer.getOffset().x, imageLayer.getOffset().y);
 			}
-			// Habilitar la repetición de la textura en el eje X (y Y si es necesario)
-			_bgTexture.setRepeated(true);
+			else if (imageLayer.getName() == "University") {
+				if (!_uniTexture.loadFromFile("assets/university.jpg"))
+				{
+					std::cerr << "Failed to load image layer" << std::endl;
+					continue;
+				}
 
-			// Crear y configurar el sprite
-			_bgSprite.setTexture(_bgTexture);
-			// Ajustar el tamaño del sprite para que sea más grande que la textura si quieres que se repita
-			// Aquí, como ejemplo, se establece el tamaño del sprite al doble de la textura original en X
-			_bgSprite.setTextureRect(sf::IntRect(0, 0, _bgTexture.getSize().x * 5, _bgTexture.getSize().y));
+				_uniSprite.setTexture(_uniTexture);
 
-			_bgSprite.setPosition(imageLayer.getOffset().x, imageLayer.getOffset().y);
+				_uniSprite.setPosition(imageLayer.getOffset().x, imageLayer.getOffset().y);
+			}
 		}
 	}
 
@@ -79,6 +90,9 @@ void TiledMap::render(sf::RenderWindow& window)
 {
 	// Draw the background
 	window.draw(_bgSprite);
+
+	// Draw the university
+	window.draw(_uniSprite);
 
 	const int tileSize = 32;
 

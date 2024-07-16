@@ -16,6 +16,11 @@ private:
 	b2World& _world;
 	TiledMap* _tiledMap;
 
+	sf::Texture _lifesTexture;
+	sf::Sprite _lifesSprite;
+	sf::Font _font;
+	sf::Text _pointsText;
+
 	Player* _player;
 	EnemySpawn* _enemySpawn;
 	Structures* _structures;
@@ -23,7 +28,7 @@ private:
 	DestroyableTerrainSpawn* _destroyableTerrainSpawn;
 
 	int _totalPoints = 0;
-	int _tries = 1;
+	int _lifes = 5;
 	bool _gameFinished = false;
 
 	sf::RectangleShape* _deathScreen;
