@@ -26,6 +26,26 @@ Gameplay::~Gameplay()
 
 void Gameplay::update()
 {
+	if (_isFrozen) {
+		if (_deathScreenOpacity < 255) {
+			_deathScreenOpacity += 15;  // Incrementa la opacidad gradualmente
+		}
+		_deathScreen->setFillColor(sf::Color(0, 0, 0, _deathScreenOpacity));
+
+		// Asegura que la pantalla de muerte esté centrada en la posición del jugador
+		sf::Vector2f playerPos = getCameraPosition();
+		playerPos.x -= _deathScreen->getSize().x / 2 - 150;
+		playerPos.y -= _deathScreen->getSize().y / 2;
+		_deathScreen->setPosition(playerPos);
+
+		if (_deathScreenOpacity >= 255) {
+			respawn();
+		}
+
+		return;
+
+	}
+
 	_world.Step(1.0f / 60, int32(10), int32(8));
 
 	// Restart the game with T
@@ -80,36 +100,10 @@ void Gameplay::update()
 
 	if (_player->isDead()) {
 		_isPlayerDead = true;
+		_isFrozen = true;
 	}
 
-	if (_isPlayerDead) {
-		if (_deathScreenOpacity < 255) {
-			_deathScreenOpacity += 15;  // Incrementa la opacidad gradualmente
-		}
-		_deathScreen->setFillColor(sf::Color(0, 0, 0, _deathScreenOpacity));
-
-		// Asegura que la pantalla de muerte esté centrada en la posición del jugador
-		sf::Vector2f playerPos = getCameraPosition();
-		playerPos.x -= _deathScreen->getSize().x / 2 - 150;
-		playerPos.y -= _deathScreen->getSize().y / 2;
-		_deathScreen->setPosition(playerPos);
-	}
-
-	// Respawn logic
-	if (_isPlayerDead && _deathScreenOpacity >= 255) {
-		_tries++;
-		if (_tries > 5) {
-			gameOver();
-			respawn();
-			_isPlayerDead = false;
-			_deathScreenOpacity = 0;
-		}
-		else {
-			respawn();
-			_isPlayerDead = false;
-			_deathScreenOpacity = 0;
-		}
-	}
+	
 }
 
 void Gameplay::render(sf::RenderWindow& window)
@@ -191,6 +185,11 @@ void Gameplay::respawn()
 
 	delete _enemySpawn;
 	spawnEnemies();
+
+	_isPlayerDead = false;
+	_deathScreenOpacity = 0; // Reiniciar la opacidad de la pantalla de muerte
+	_deathScreen->setFillColor(sf::Color(0, 0, 0, _deathScreenOpacity)); // Reiniciar el color de la pantalla de muerte
+	_isFrozen = false;
 }
 
 void Gameplay::gameOver()

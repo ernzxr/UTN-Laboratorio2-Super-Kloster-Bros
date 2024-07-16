@@ -29,6 +29,7 @@ private:
 	sf::RectangleShape* _deathScreen;
 	int _deathScreenOpacity = 0;
 	bool _isPlayerDead = false;
+	bool _isFrozen = false;
 public:
 	Gameplay(b2World& world);
 
