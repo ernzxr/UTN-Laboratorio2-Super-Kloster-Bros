@@ -17,10 +17,11 @@ Gameplay::Gameplay(b2World& world) : _world(world)
 
 	_font.loadFromFile("assets/SuperMario256.ttf");
 	_pointsText.setFont(_font);
-	_pointsText.setCharacterSize(24); // Tamaño en píxeles, no puntos.
+	_pointsText.setCharacterSize(24); // Tamaï¿½o en pï¿½xeles, no puntos.
 	_pointsText.setFillColor(sf::Color::White);
 	_pointsText.setOutlineThickness(2);
 	_pointsText.setOutlineColor(sf::Color::Black);
+	_deathScreen->setFillColor(sf::Color(0, 0, 0, 0));
 }
 
 Gameplay::~Gameplay()
@@ -36,6 +37,42 @@ Gameplay::~Gameplay()
 
 void Gameplay::update()
 {
+	if (_isFrozen) {
+		if (_deathScreenOpacity < 255) {
+			_deathScreenOpacity += 15;  // Incrementa la opacidad gradualmente
+		}
+		_deathScreen->setFillColor(sf::Color(0, 0, 0, _deathScreenOpacity));
+
+		// Asegura que la pantalla de muerte estï¿½ centrada en la posiciï¿½n del jugador
+		sf::Vector2f playerPos = getCameraPosition();
+		playerPos.x -= _deathScreen->getSize().x / 2 - 150;
+		playerPos.y -= _deathScreen->getSize().y / 2;
+		_deathScreen->setPosition(playerPos);
+
+
+		if (_deathScreenOpacity >= 255) {
+			respawn();
+			_isFadingOut = true;
+		}
+		return;
+	}
+
+	if (_isFadingOut) {
+		if (_deathScreenOpacity > 0) {
+			_deathScreenOpacity -= 15;  // Decrementa la opacidad gradualmente
+		}
+		else {
+			_isFadingOut = false;  // Termina el proceso de desvanecimiento
+			_isPlayerDead = false;
+		}
+		_deathScreen->setFillColor(sf::Color(0, 0, 0, _deathScreenOpacity));
+
+		sf::Vector2f playerPos = getCameraPosition();
+		playerPos.x -= _deathScreen->getSize().x / 2 - 150;
+		playerPos.y -= _deathScreen->getSize().y / 2;
+		_deathScreen->setPosition(playerPos);
+	}
+
 	_world.Step(1.0f / 60, int32(10), int32(8));
 
 	// Restart the game with T
@@ -62,7 +99,7 @@ void Gameplay::update()
 		(*it)->update();
 		if ((*it)->isDestroyed()) {
 			delete* it;
-			it = destroyableTerrains.erase(it);  // Borra el elemento y avanza al siguiente válido.
+			it = destroyableTerrains.erase(it);  // Borra el elemento y avanza al siguiente vï¿½lido.
 		}
 		else {
 			++it;  // Avanza al siguiente elemento.
@@ -115,6 +152,7 @@ void Gameplay::update()
 
 	if (_player->isDead()) {
 		_isPlayerDead = true;
+		_isFrozen = true;
 	}
 
 	if (_isPlayerDead) {
@@ -123,7 +161,7 @@ void Gameplay::update()
 		}
 		_deathScreen->setFillColor(sf::Color(0, 0, 0, _deathScreenOpacity));
 
-		// Asegura que la pantalla de muerte esté centrada en la posición del jugador
+		// Asegura que la pantalla de muerte estï¿½ centrada en la posiciï¿½n del jugador
 		sf::Vector2f playerPos = getCameraPosition();
 		playerPos.x -= _deathScreen->getSize().x / 2 - 150;
 		playerPos.y -= _deathScreen->getSize().y / 2;
@@ -176,14 +214,14 @@ void Gameplay::render(sf::RenderWindow& window)
 		terrain->render(window);
 	}
 
-	// Ajustar la posición del sprite de las vidas para que siempre esté en la esquina superior izquierda de la vista
+	// Ajustar la posiciï¿½n del sprite de las vidas para que siempre estï¿½ en la esquina superior izquierda de la vista
 	sf::Vector2f viewCorner = window.mapPixelToCoords(sf::Vector2i(0, 0), view);
 	_lifesSprite.setPosition(viewCorner.x + 15, viewCorner.y + 15);
 
 	window.draw(_lifesSprite);
 
-	// Ajusta la posición del texto del puntaje
-	_pointsText.setPosition(viewCorner.x + 15, viewCorner.y + 50); // Ejemplo de posición
+	// Ajusta la posiciï¿½n del texto del puntaje
+	_pointsText.setPosition(viewCorner.x + 15, viewCorner.y + 50); // Ejemplo de posiciï¿½n
 
 	window.draw(_pointsText);
 
@@ -226,6 +264,8 @@ bool Gameplay::isGameFinished() const
 
 void Gameplay::respawn()
 {
+	_isFrozen = false;
+
 	delete _destroyableTerrainSpawn;
 	spawnDestroyableTerrains();
 	
