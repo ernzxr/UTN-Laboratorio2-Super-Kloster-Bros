@@ -28,7 +28,6 @@ struct FixtureData {
 		Player* player;
 		Enemy* enemy;
 		Star* star;
-		struct { int mapX, mapY; };
 	};
 };
 

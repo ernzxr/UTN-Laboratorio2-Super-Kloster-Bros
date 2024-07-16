@@ -98,8 +98,8 @@ void Gameplay::update()
 	// Respawn logic
 	if (_isPlayerDead && _deathScreenOpacity >= 255) {
 		_tries++;
-		if (_tries > 3) {
-			//gameOver();
+		if (_tries > 5) {
+			gameOver();
 			respawn();
 			_isPlayerDead = false;
 			_deathScreenOpacity = 0;

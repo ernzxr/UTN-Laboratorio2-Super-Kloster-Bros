@@ -17,7 +17,6 @@ private:
 
 	std::vector<Obstacle*> _obstacles;
 	std::vector<Terrain*> _terrains;
-	std::vector<DestroyableTerrain*> _destroyableTerrains;
 public:
 	Structures(b2World& world, tmx::Map& tiled);
 
@@ -30,7 +29,5 @@ public:
 	std::vector<Obstacle*>& getObstacles();
 
 	std::vector<Terrain*>& getTerrains();
-
-	std::vector<DestroyableTerrain*>& getDestroyableTerrains();
 };
 

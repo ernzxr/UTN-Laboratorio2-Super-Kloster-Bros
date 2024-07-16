@@ -54,7 +54,6 @@ void Scene::update(sf::Event event){
             _pause->open();
         }
     }
-    
 }
 
 void Scene::render(sf::RenderWindow& window)

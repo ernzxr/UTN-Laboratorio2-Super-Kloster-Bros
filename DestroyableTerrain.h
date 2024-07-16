@@ -22,7 +22,6 @@ private:
 	sf::Sprite* _endTile;
 
 	b2Fixture* _topFixture;
-
 public:
 	DestroyableTerrain(b2World& world, b2Vec2 position, float width, float height);
 

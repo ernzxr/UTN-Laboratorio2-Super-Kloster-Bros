@@ -19,8 +19,6 @@ DestroyableTerrain::DestroyableTerrain(b2World& world, b2Vec2 position, float wi
 	_fixtureData = new FixtureData();
 	_fixtureData->listener = this;
 	_fixtureData->type = FixtureDataType::DestroyableTile;
-	_fixtureData->mapX = position.x;
-	_fixtureData->mapY = position.y;
 
 	// Create Fixture
 	b2FixtureDef fixtureDef;
@@ -41,7 +39,6 @@ DestroyableTerrain::DestroyableTerrain(b2World& world, b2Vec2 position, float wi
 	sensorFixtureDef.userData.pointer = (uintptr_t)(_fixtureData);  // Asignamos datos de usuario si es necesario
 	_body->CreateFixture(&sensorFixtureDef);
 
-
 	_texture.loadFromFile("assets/SpriteSheetTimesTwo.png");
 	_startTile = new sf::Sprite();
 	_middleTile = new sf::Sprite();
@@ -58,8 +55,6 @@ DestroyableTerrain::DestroyableTerrain(b2World& world, b2Vec2 position, float wi
 	_startTile->setOrigin(_startTile->getGlobalBounds().width / 2.0f, _startTile->getGlobalBounds().height / 2.0f);
 	_middleTile->setOrigin(_middleTile->getGlobalBounds().width / 2.0f, _middleTile->getGlobalBounds().height / 2.0f);
 	_endTile->setOrigin(_endTile->getGlobalBounds().width / 2.0f, _endTile->getGlobalBounds().height / 2.0f);
-	
-	
 }
 
 void DestroyableTerrain::update()
@@ -138,7 +133,6 @@ void DestroyableTerrain::onEndContact(b2Fixture* self, b2Fixture* other)
 		_fallTimer += -0.1f;
 	}
 }
-
 
 DestroyableTerrain::~DestroyableTerrain()
 {

@@ -17,8 +17,6 @@ Terrain::Terrain(b2World& world, b2Vec2 position, float width, float height)
 	// Type of Fixture Data
 	_fixtureData = new FixtureData();
 	_fixtureData->type = FixtureDataType::GroundTile;
-	_fixtureData->mapX = position.x;
-	_fixtureData->mapY = position.y;
 
 	// Create Fixture
 	b2FixtureDef fixtureDef;
@@ -83,8 +81,6 @@ Terrain::Terrain(b2World& world, b2Vec2 position, std::vector<tmx::Vector2f> obj
 	// Type of Fixture Data
 	_fixtureData = new FixtureData();
 	_fixtureData->type = FixtureDataType::GroundTile;
-	_fixtureData->mapX = position.x;
-	_fixtureData->mapY = position.y;
 
 	// Create Fixture
 	b2FixtureDef fixtureDef;

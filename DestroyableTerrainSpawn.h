@@ -14,7 +14,6 @@ private:
 	tmx::Map& _tiled;
 
 	std::vector<DestroyableTerrain*> _destroyableTerrains;
-
 public:
 	DestroyableTerrainSpawn(b2World& world, tmx::Map& tiled);
 

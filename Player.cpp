@@ -54,7 +54,6 @@ Player::Player(b2World& world, b2Vec2 position) : _startingPosition(position)
 	fixtureDef.isSensor = true;
 	_topFixture = _body->CreateFixture(&fixtureDef);
 
-
 	// Create SFML Sprite
 	_texture.loadFromFile("assets/SpriteSheetTimesTwo.png");
 	_sprite = new sf::Sprite();
@@ -101,7 +100,6 @@ void Player::cmd()
 			_state = PlayerState::Jump;
 		}
 	}
-
 
 	if (_didJump) {
 		if (_velocity.y > -36.0f && _isJumping) {
