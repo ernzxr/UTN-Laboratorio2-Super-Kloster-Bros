@@ -30,6 +30,7 @@ private:
 	int _deathScreenOpacity = 0;
 	bool _isPlayerDead = false;
 	bool _isFrozen = false;
+	bool _isFadingOut = false;
 public:
 	Gameplay(b2World& world);
 

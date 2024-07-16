@@ -11,6 +11,7 @@ Gameplay::Gameplay(b2World& world) : _world(world)
 	spawnDestroyableTerrains();
 	spawnCollectables();
 	_deathScreen = new sf::RectangleShape;
+	_deathScreen->setFillColor(sf::Color(0, 0, 0, 0));
 }
 
 Gameplay::~Gameplay()
@@ -38,12 +39,28 @@ void Gameplay::update()
 		playerPos.y -= _deathScreen->getSize().y / 2;
 		_deathScreen->setPosition(playerPos);
 
+
 		if (_deathScreenOpacity >= 255) {
 			respawn();
+			_isFadingOut = true;
 		}
-
 		return;
+	}
 
+	if (_isFadingOut) {
+		if (_deathScreenOpacity > 0) {
+			_deathScreenOpacity -= 15;  // Decrementa la opacidad gradualmente
+		}
+		else {
+			_isFadingOut = false;  // Termina el proceso de desvanecimiento
+			_isPlayerDead = false;
+		}
+		_deathScreen->setFillColor(sf::Color(0, 0, 0, _deathScreenOpacity));
+
+		sf::Vector2f playerPos = getCameraPosition();
+		playerPos.x -= _deathScreen->getSize().x / 2 - 150;
+		playerPos.y -= _deathScreen->getSize().y / 2;
+		_deathScreen->setPosition(playerPos);
 	}
 
 	_world.Step(1.0f / 60, int32(10), int32(8));
@@ -177,6 +194,8 @@ bool Gameplay::isGameFinished() const
 
 void Gameplay::respawn()
 {
+	_isFrozen = false;
+
 	delete _destroyableTerrainSpawn;
 	spawnDestroyableTerrains();
 	
@@ -185,11 +204,6 @@ void Gameplay::respawn()
 
 	delete _enemySpawn;
 	spawnEnemies();
-
-	_isPlayerDead = false;
-	_deathScreenOpacity = 0; // Reiniciar la opacidad de la pantalla de muerte
-	_deathScreen->setFillColor(sf::Color(0, 0, 0, _deathScreenOpacity)); // Reiniciar el color de la pantalla de muerte
-	_isFrozen = false;
 }
 
 void Gameplay::gameOver()
