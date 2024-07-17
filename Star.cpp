@@ -29,10 +29,10 @@ Star::Star(b2World& world, b2Vec2 position, int points, StarType type) : _points
     _body->CreateFixture(&fixtureDef);
 
     // Create SFML Sprite
-    _texture.loadFromFile("assets/tileset.png");
+    _texture.loadFromFile("assets/SpriteSheetTimesTwo.png");
     _sprite = new sf::Sprite();
     _sprite->setTexture(_texture);
-    _sprite->setTextureRect({ 96, 0 , 32, 32 });
+    _sprite->setTextureRect({ 0, 384 , 32, 32 });
     _sprite->setOrigin(_sprite->getGlobalBounds().width / 2.0f, _sprite->getGlobalBounds().height / 2.0f);
     _sprite->setScale(-1, 1);
 
@@ -47,6 +47,13 @@ Star::~Star()
 
 void Star::update()
 {
+    _frame += 0.1f;
+
+    if (_frame > 4) {
+        _frame = 0;
+    }
+
+    _sprite->setTextureRect({ 0 + (int)_frame * 32, 384, 24, 32 });
 }
 
 void Star::render(sf::RenderWindow& window)

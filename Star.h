@@ -28,6 +28,7 @@ private:
 	StarType _starType;
 
 	bool _isCollected = false;
+	float _frame = 0.0f;
 public:
 	Star(b2World& world, b2Vec2 position, int points, StarType type = StarType::Yellow);
 	
