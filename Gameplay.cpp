@@ -154,30 +154,12 @@ void Gameplay::update()
 		_isPlayerDead = true;
 		_isFrozen = true;
 	}
-
-	if (_isPlayerDead) {
-		if (_deathScreenOpacity < 255) {
-			_deathScreenOpacity += 15;  // Incrementa la opacidad gradualmente
-		}
-		_deathScreen->setFillColor(sf::Color(0, 0, 0, _deathScreenOpacity));
-
-		// Asegura que la pantalla de muerte est� centrada en la posici�n del jugador
-		sf::Vector2f playerPos = getCameraPosition();
-		playerPos.x -= _deathScreen->getSize().x / 2 - 150;
-		playerPos.y -= _deathScreen->getSize().y / 2;
-		_deathScreen->setPosition(playerPos);
-	}
-
 	// Respawn logic
-	if (_isPlayerDead && _deathScreenOpacity >= 255) {
+
+	if (_isPlayerDead && !_isFadingOut) {
 		_lifes--;
 		if (_lifes < 1) {
 			gameOver();
-		}
-		else {
-			respawn();
-			_isPlayerDead = false;
-			_deathScreenOpacity = 0;
 		}
 	}
 }
