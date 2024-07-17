@@ -171,6 +171,13 @@ void Player::update()
 	if (_sprite->getPosition().y >= 700) {
 		_death = true;
 	}
+
+	if (_death) {
+		_buffer.loadFromFile("assets/sounds/death_sound.wav");
+		_sound.setBuffer(_buffer);
+		_sound.play();
+	}
+
 }
 
 void Player::render(sf::RenderWindow& window) {
@@ -179,13 +186,14 @@ void Player::render(sf::RenderWindow& window) {
 	window.draw(*_sprite);
 
 	
+	/*
 	// Dibujar los fixtures para depuración
 	drawFixture(_spikeFixture, window, sf::Color(255, 0, 0, 100)); // Rojo
 	drawFixture(_groundFixture, window, sf::Color(0, 255, 0, 100)); // Verde
 	drawFixture(_rightEnemyFixture, window, sf::Color(0, 0, 255, 100)); // Azul
 	drawFixture(_leftEnemyFixture, window, sf::Color(0, 0, 255, 100)); // Azul
 	drawFixture(_topFixture, window, sf::Color(255, 165, 0, 100)); // Naranja
-	
+	*/
 }
 
 void Player::drawFixture(b2Fixture* fixture, sf::RenderWindow& window, sf::Color color) {
@@ -227,6 +235,11 @@ void Player::onBeginContact(b2Fixture* self, b2Fixture* other)
 	else if (self != _groundFixture && self != _spikeFixture && data->type == FixtureDataType::Enemy) {
 		_onGround = true;
 	}
+	else if (data->type == FixtureDataType::Star) {
+		_buffer.loadFromFile("assets/sounds/smw_coin.wav");
+		_sound.setBuffer(_buffer);
+		_sound.play();
+	}
 }
 
 void Player::onEndContact(b2Fixture* self, b2Fixture* other)
@@ -244,6 +257,9 @@ void Player::onEndContact(b2Fixture* self, b2Fixture* other)
 		_onRoof = false;
 	}
 	else if (self != _groundFixture && self != _spikeFixture && self == self && data->type == FixtureDataType::Enemy) {
+		_buffer.loadFromFile("assets/sounds/smw_stomp.wav");
+		_sound.setBuffer(_buffer);
+		_sound.play();
 		_onGround = false;
 	}
 
