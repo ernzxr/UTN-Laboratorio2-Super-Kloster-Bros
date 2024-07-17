@@ -22,7 +22,7 @@ private:
 	b2Body* _body;
 
 	float _width = 32.0f;
-	float _height = 64.0f;
+	float _height = 54.0f;
 
 	b2Vec2 _startingPosition;
 

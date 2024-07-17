@@ -49,7 +49,7 @@ Player::Player(b2World& world, b2Vec2 position) : _startingPosition(position)
 	_leftEnemyFixture = _body->CreateFixture(&fixtureDef);
 
 	//Top Ground Fixture
-	b2shape.SetAsBox(0.4f, 0.1f, b2Vec2(-0.0f, -1.0f), 0.0f);
+	b2shape.SetAsBox(0.4f, 0.1f, b2Vec2(-0.0f, -0.8f), 0.0f);
 	fixtureDef.userData.pointer = (uintptr_t)&_fixtureData;
 	fixtureDef.isSensor = true;
 	_topFixture = _body->CreateFixture(&fixtureDef);
@@ -178,14 +178,14 @@ void Player::render(sf::RenderWindow& window) {
 	_sprite->setRotation(_body->GetAngle() * deg_per_rad);
 	window.draw(*_sprite);
 
-	/*
+	
 	// Dibujar los fixtures para depuración
 	drawFixture(_spikeFixture, window, sf::Color(255, 0, 0, 100)); // Rojo
 	drawFixture(_groundFixture, window, sf::Color(0, 255, 0, 100)); // Verde
 	drawFixture(_rightEnemyFixture, window, sf::Color(0, 0, 255, 100)); // Azul
 	drawFixture(_leftEnemyFixture, window, sf::Color(0, 0, 255, 100)); // Azul
 	drawFixture(_topFixture, window, sf::Color(255, 165, 0, 100)); // Naranja
-	*/
+	
 }
 
 void Player::drawFixture(b2Fixture* fixture, sf::RenderWindow& window, sf::Color color) {
