@@ -32,6 +32,11 @@ bool Play::getPlay() const
 	return _play;
 }
 
+bool Play::getTryAgain()
+{
+	return _gameplay->getTryAgain();
+}
+
 bool Play::getPause() const
 {
 	return _pause;
@@ -47,6 +52,15 @@ void Play::newGame() {
 		delete _gameplay;
 	}
 	createGameplay();
+}
+
+void Play::tryAgain() {
+	_gameplay->tryAgain();
+}
+
+void Play::gameOver()
+{
+	_gameplay->gameOver();
 }
 
 bool Play::isGameFinished()

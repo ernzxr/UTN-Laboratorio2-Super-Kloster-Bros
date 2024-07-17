@@ -26,6 +26,12 @@ public:
 
 	void newGame();
 
+	void tryAgain();
+
+	void gameOver();
+	
+	bool getTryAgain();
+
 	bool isGameFinished();
 
 	void createGameplay();

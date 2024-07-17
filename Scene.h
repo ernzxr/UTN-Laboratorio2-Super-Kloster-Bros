@@ -11,6 +11,7 @@ private:
 	Menu* _menu;
 	Play* _play;
 	Pause* _pause;
+	TryAgain* _tryAgain;
 public:
 	Scene(b2World& world);
 

@@ -6,12 +6,17 @@ Scene::Scene(b2World& world)
 	_menu = new Menu();
 	_play = new Play(world);
 	_pause = new Pause();
+    _tryAgain = new TryAgain();
 }
 
 void Scene::update() {
     if (_play->getPlay()) {
         _play->update();
-        if (_play->isGameFinished()) {
+        if (_play->getTryAgain()) {
+            _play->close();
+            _tryAgain->open();
+        }
+        else if (_play->isGameFinished()) {
             _play->close();
             _menu->open();
         }
@@ -46,6 +51,20 @@ void Scene::update(sf::Event event){
             _menu->open();
         }
     }
+    else if(_tryAgain->getTryAgain())
+	{
+		_tryAgain->update(event);
+		if (_tryAgain->getSelectedOption() == 0) {
+			_tryAgain->close();
+			_play->tryAgain();
+			_play->open();
+		}
+		else if (_tryAgain->getSelectedOption() == 1) {
+			_tryAgain->close();
+            _play->gameOver();
+			_menu->open();
+		}
+	}
     else if (_play->getPlay())
     {
         _play->update(event);
@@ -61,6 +80,11 @@ void Scene::render(sf::RenderWindow& window)
 	if (_menu->getMainMenu())
 	{
 		_menu->render(window);
+	}
+	else if (_tryAgain->getTryAgain())
+	{
+        _play->render(window);
+		_tryAgain->render(window);
 	}
 	else if (_pause->getPaused())
 	{

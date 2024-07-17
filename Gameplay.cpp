@@ -4,23 +4,21 @@
 
 Gameplay::Gameplay(b2World& world) : _world(world)
 {
-	generateMap();
-	spawnStructures();
-	spawnPlayer();
-	spawnEnemies();
-	spawnDestroyableTerrains();
-	spawnCollectables();
-	_deathScreen = new sf::RectangleShape;
+	spawnAll();
 
+	// Lifes sprite
 	_lifesTexture.loadFromFile("assets/lifes.png");
 	_lifesSprite.setTexture(_lifesTexture);
 
+	// Score text
 	_font.loadFromFile("assets/SuperMario256.ttf");
 	_pointsText.setFont(_font);
 	_pointsText.setCharacterSize(24); // Tama�o en p�xeles, no puntos.
 	_pointsText.setFillColor(sf::Color::White);
 	_pointsText.setOutlineThickness(2);
 	_pointsText.setOutlineColor(sf::Color::Black);
+
+	_deathScreen = new sf::RectangleShape;
 	_deathScreen->setFillColor(sf::Color(0, 0, 0, 0));
 }
 
@@ -77,11 +75,17 @@ void Gameplay::update()
 
 	// Restart the game with T
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
-		respawn();
+		tryAgain();
 	}
 
+	// Update Player
 	_player->cmd();
 	_player->update();
+
+	if (_player->isDead()) {
+		_isPlayerDead = true;
+		_isFrozen = true;
+	}
 
 	// Update Enemies
 	auto& enemies = _enemySpawn->getEnemies();
@@ -150,16 +154,11 @@ void Gameplay::update()
 
 	_pointsText.setString(std::to_string(_totalPoints));
 
-	if (_player->isDead()) {
-		_isPlayerDead = true;
-		_isFrozen = true;
-	}
 	// Respawn logic
-
 	if (_isPlayerDead && !_isFadingOut) {
 		_lifes--;
 		if (_lifes < 1) {
-			gameOver();
+			_tryAgain = true;
 		}
 	}
 }
@@ -214,6 +213,72 @@ void Gameplay::render(sf::RenderWindow& window)
 	}
 }
 
+void Gameplay::respawn()
+{
+	_isFrozen = false;
+
+	delete _destroyableTerrainSpawn;
+	spawnDestroyableTerrains();
+	
+	delete _player;
+	spawnPlayer();
+
+	delete _enemySpawn;
+	spawnEnemies();
+}
+
+bool Gameplay::getTryAgain() const
+{
+	return _tryAgain;
+}
+
+void Gameplay::tryAgain()
+{
+	_tryAgain = false;
+	_isFadingOut = false;
+	_isPlayerDead = false;
+	_deathScreenOpacity = 0;
+	_totalPoints = 0;
+	_lifes = 5;
+
+	delete _collectables;
+	spawnCollectables();
+
+	respawn();
+}
+
+void Gameplay::gameOver()
+{
+	_totalPoints += _lifes * 100;
+	_gameFinished = true;
+}
+
+void Gameplay::gameWin()
+{
+	_totalPoints += _lifes * 100;
+	std::cout<<"You win!"<<std::endl;
+	_gameFinished = true;
+}
+
+bool Gameplay::isGameFinished() const
+{
+	return _gameFinished;
+}
+
+sf::Vector2f Gameplay::getCameraPosition()
+{
+	return _player->getPosition();
+}
+
+void Gameplay::spawnAll() {
+	generateMap();
+	spawnStructures();
+	spawnPlayer();
+	spawnEnemies();
+	spawnDestroyableTerrains();
+	spawnCollectables();
+}
+
 void Gameplay::spawnPlayer() {
 	_player = new Player(_world, _tiledMap->getPlayerSpawnPoint());
 }
@@ -238,42 +303,3 @@ void Gameplay::spawnStructures() {
 void Gameplay::spawnDestroyableTerrains() {
 	_destroyableTerrainSpawn = new DestroyableTerrainSpawn(_world, _tiledMap->getMap());
 }
-
-bool Gameplay::isGameFinished() const
-{
-	return _gameFinished;
-}
-
-void Gameplay::respawn()
-{
-	_isFrozen = false;
-
-	delete _destroyableTerrainSpawn;
-	spawnDestroyableTerrains();
-	
-	delete _player;
-	spawnPlayer();
-
-	delete _enemySpawn;
-	spawnEnemies();
-}
-
-void Gameplay::gameOver()
-{
-	_totalPoints += _lifes * 100;
-	std::cout<<"Game Over!"<<std::endl;
-	_gameFinished = true;
-}
-
-void Gameplay::gameWin()
-{
-	_totalPoints += _lifes * 100;
-	std::cout<<"You win!"<<std::endl;
-	_gameFinished = true;
-}
-
-sf::Vector2f Gameplay::getCameraPosition()
-{
-	return _player->getPosition();
-}
-

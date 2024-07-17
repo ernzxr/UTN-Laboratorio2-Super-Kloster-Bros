@@ -9,6 +9,7 @@
 #include <Box2D/Box2D.h>
 #include "Structures.h"
 #include "Collectable.h"
+#include "TryAgain.h"
 
 class Gameplay
 {
@@ -16,8 +17,11 @@ private:
 	b2World& _world;
 	TiledMap* _tiledMap;
 
+	int _lifes = 5;
 	sf::Texture _lifesTexture;
 	sf::Sprite _lifesSprite;
+
+	int _totalPoints = 0;
 	sf::Font _font;
 	sf::Text _pointsText;
 
@@ -27,9 +31,8 @@ private:
 	Collectable* _collectables;
 	DestroyableTerrainSpawn* _destroyableTerrainSpawn;
 
-	int _totalPoints = 0;
-	int _lifes = 5;
 	bool _gameFinished = false;
+	bool _tryAgain = false;
 
 	sf::RectangleShape* _deathScreen;
 	int _deathScreenOpacity = 0;
@@ -47,6 +50,10 @@ public:
 
 	void respawn();
 
+	bool getTryAgain() const;
+
+	void tryAgain();
+
 	void gameWin();
 
 	void gameOver();
@@ -62,6 +69,8 @@ public:
 	void spawnStructures();
 
 	void spawnDestroyableTerrains();
+
+	void spawnAll();
 
 	bool isGameFinished() const;
 
