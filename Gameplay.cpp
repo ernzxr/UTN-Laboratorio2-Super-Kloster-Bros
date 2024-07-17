@@ -69,6 +69,7 @@ void Gameplay::update()
 		playerPos.x -= _deathScreen->getSize().x / 2 - 150;
 		playerPos.y -= _deathScreen->getSize().y / 2;
 		_deathScreen->setPosition(playerPos);
+		return;
 	}
 
 	_world.Step(1.0f / 60, int32(10), int32(8));
