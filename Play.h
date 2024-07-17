@@ -1,6 +1,7 @@
 #pragma once
 #include <Box2D/Box2D.h>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Gameplay.h"
 
 class Play
@@ -11,6 +12,9 @@ private:
 
 	bool _play;
 	bool _pause;
+
+	sf::Music _musicMenu;
+
 public:
 	Play(b2World& world);
 

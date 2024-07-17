@@ -3,9 +3,15 @@
 
 Play::Play(b2World& world) : _world(world)
 {
+	if (!_musicMenu.openFromFile("assets/sounds/MenuMusic.wav"))
+		return; // error
+
 	_gameplay = nullptr;
 	_play = false;
 	_pause = false;
+
+	_musicMenu.setVolume(25.0f);
+	_musicMenu.setLoop(true);
 }
 
 void Play::update()
@@ -70,6 +76,7 @@ bool Play::isGameFinished()
 
 void Play::open()
 {
+	_musicMenu.play();
 	_pause = false;
 	_play = true;
 }
@@ -77,4 +84,5 @@ void Play::open()
 void Play::close()
 {
 	_play = false;
+	_musicMenu.stop();
 }

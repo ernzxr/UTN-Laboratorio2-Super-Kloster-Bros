@@ -12,6 +12,7 @@ Menu::Menu()
 
 	_musicMenu.play();
 	_musicMenu.setVolume(25.0f);
+	_musicMenu.setLoop(true);
 
 	_nuevaPTexture.loadFromFile("assets/NEW_GAME.png");
 	_nuevaPSprite.setTexture(_nuevaPTexture);
@@ -80,11 +81,13 @@ void Menu::open() {
 	_mainMenuSelection = 0;
 	_selectedOption = -1;
 	_inMainMenu = true;
+	_musicMenu.play();
 }
 
 void Menu::close()
 {
 	_inMainMenu = false;
+	_musicMenu.stop();
 }
 
 int Menu::getSelectedOption() const
