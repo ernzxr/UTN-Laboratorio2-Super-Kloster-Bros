@@ -22,9 +22,6 @@ void Credits::update()
 			_clock.restart();
 		}
 	}
-	else if (_currentLineIndex >= _vCredits.size()) {
-		_selectedOption = true;
-	}
 }
 
 void Credits::update(sf::Event event)
@@ -50,6 +47,21 @@ void Credits::render(sf::RenderWindow& window)
 		text.setOutlineThickness(2);
 		text.setOutlineColor(sf::Color::Black);
 		text.setString(_vCredits[_currentLineIndex]);
+
+		sf::FloatRect textoRect = text.getLocalBounds();
+		text.setOrigin(textoRect.left + textoRect.width / 2.0f, textoRect.top + textoRect.height / 2.0f);
+		text.setPosition(centerPosition.x, centerPosition.y);
+
+		window.draw(text);
+	}
+	else {
+		sf::Text text;
+		text.setFont(_font);
+		text.setCharacterSize(24);
+		text.setFillColor(sf::Color::White);
+		text.setOutlineThickness(2);
+		text.setOutlineColor(sf::Color::Black);
+		text.setString("PRESIONA UNA TECLA PARA CONTINUAR");
 
 		sf::FloatRect textoRect = text.getLocalBounds();
 		text.setOrigin(textoRect.left + textoRect.width / 2.0f, textoRect.top + textoRect.height / 2.0f);

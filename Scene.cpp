@@ -26,11 +26,6 @@ void Scene::update() {
 	}
 	else if (_credits->getCredits()) {
 		_credits->update();
-		if (_credits->creditsEnded()) {
-			_credits->close();
-			_play->gameWin();
-			_menu->open();
-		}
 	}
 }
 
@@ -94,7 +89,7 @@ void Scene::update(sf::Event event) {
 			_menu->open();
 		}
 	}
-	/*else if (_credits->getCredits())
+	else if (_credits->getCredits())
 	{
 		_credits->update(event);
 		if (_credits->creditsEnded()) {
@@ -102,7 +97,7 @@ void Scene::update(sf::Event event) {
 			_play->gameWin();
 			_menu->open();
 		}
-	}*/
+	}
 	else if (_play->getPlay())
 	{
 		_play->update(event);
