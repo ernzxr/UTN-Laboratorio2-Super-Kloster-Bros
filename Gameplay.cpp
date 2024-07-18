@@ -35,6 +35,57 @@ Gameplay::~Gameplay()
 
 void Gameplay::update()
 {
+	// Update Lifes
+	int lifesWidth = 177;
+	int lifesHeight = 32;
+
+	switch (_lifes) {
+	case 5:
+		_lifesSprite.setTextureRect({ 24, 22 + lifesHeight * 0, lifesWidth, lifesHeight });
+		break;
+	case 4:
+		if (_firstDeath) {
+			_buffer.loadFromFile("assets/sounds/firstDeath.wav");
+			_sound.setBuffer(_buffer);
+			_sound.play();
+			_firstDeath = false;
+		}
+		_lifesSprite.setTextureRect({ 24, 22 + lifesHeight * 1, lifesWidth, lifesHeight });
+		break;
+	case 3:
+		if (_secondDeath) {
+			_buffer.loadFromFile("assets/sounds/secondDeath.wav");
+			_sound.setBuffer(_buffer);
+			_sound.play();
+			_secondDeath = false;
+		}
+		_lifesSprite.setTextureRect({ 24, 22 + lifesHeight * 2, lifesWidth, lifesHeight });
+		break;
+	case 2:
+		if (_thirdDeath) {
+			_buffer.loadFromFile("assets/sounds/thirdDeath.wav");
+			_sound.setBuffer(_buffer);
+			_sound.play();
+			_thirdDeath = false;
+		}
+		_lifesSprite.setTextureRect({ 24, 22 + lifesHeight * 3, lifesWidth, lifesHeight });
+		break;
+	case 1:
+		if (_fourthDeath) {
+			_buffer.loadFromFile("assets/sounds/fourthDeath.wav");
+			_sound.setBuffer(_buffer);
+			_sound.play();
+			_fourthDeath = false;
+		}
+		_lifesSprite.setTextureRect({ 24, 22 + lifesHeight * 4, lifesWidth, lifesHeight });
+		break;
+	default:
+		break;
+	}
+
+	// Update Score
+	_pointsText.setString(std::to_string(_totalPoints));
+
 	if (_isFrozen) {
 		if (_deathScreenOpacity < 255) {
 			_deathScreenOpacity += 15;  // Incrementa la opacidad gradualmente
@@ -83,6 +134,15 @@ void Gameplay::update()
 	_player->cmd();
 	_player->update();
 
+	if (_player->getPosition().x > 2880) {
+		if (_ending) {
+			_buffer.loadFromFile("assets/sounds/ending.wav");
+			_sound.setBuffer(_buffer);
+			_sound.play();
+			_ending = false;
+		}
+	}
+
 	if (_player->isDead()) {
 		_isPlayerDead = true;
 		_isFrozen = true;
@@ -97,7 +157,7 @@ void Gameplay::update()
 			delete enemy;
 		}
 	}
-	
+
 	auto& destroyableTerrains = _destroyableTerrainSpawn->getDestroyableTerrains();
 	auto it = destroyableTerrains.begin();
 	while (it != destroyableTerrains.end()) {
@@ -110,7 +170,7 @@ void Gameplay::update()
 			++it;  // Avanza al siguiente elemento.
 		}
 	}
-	
+
 	// End the game if the player is dead or if the player wins
 	auto& stars = _collectables->getCollectables();
 	for (auto star : stars) {
@@ -120,7 +180,10 @@ void Gameplay::update()
 				_totalPoints += star->getPoints();
 				stars.erase(std::remove(stars.begin(), stars.end(), star), stars.end());
 				delete star;
-				gameWin();
+				_buffer.loadFromFile("assets/sounds/gameWin.wav");
+				_sound.setBuffer(_buffer);
+				_sound.play();
+				_showCredits = true;
 			}
 			else {
 				_totalPoints += star->getPoints();
@@ -130,35 +193,13 @@ void Gameplay::update()
 		}
 	}
 
-	int lifesWidth = 177;
-	int lifesHeight = 32;
-
-	switch (_lifes) {
-	case 5:
-		_lifesSprite.setTextureRect({ 24, 22 + lifesHeight * 0, lifesWidth, lifesHeight });
-		break;
-	case 4:
-		_lifesSprite.setTextureRect({ 24, 22 + lifesHeight * 1, lifesWidth, lifesHeight });
-		break;
-	case 3:
-		_lifesSprite.setTextureRect({ 24, 22 + lifesHeight * 2, lifesWidth, lifesHeight });
-		break;
-	case 2:
-		_lifesSprite.setTextureRect({ 24, 22 + lifesHeight * 3, lifesWidth, lifesHeight });
-		break;
-	case 1:
-		_lifesSprite.setTextureRect({ 24, 22 + lifesHeight * 4, lifesWidth, lifesHeight });
-		break;
-	default:
-		break;
-	}
-
-	_pointsText.setString(std::to_string(_totalPoints));
-
 	// Respawn logic
-	if (_isPlayerDead && !_isFadingOut) {
+	if (_isPlayerDead) {
 		_lifes--;
 		if (_lifes < 1) {
+			_buffer.loadFromFile("assets/sounds/gameOver.wav");
+			_sound.setBuffer(_buffer);
+			_sound.play();
 			_tryAgain = true;
 		}
 	}
@@ -220,7 +261,7 @@ void Gameplay::respawn()
 
 	delete _destroyableTerrainSpawn;
 	spawnDestroyableTerrains();
-	
+
 	delete _player;
 	spawnPlayer();
 
@@ -233,11 +274,29 @@ bool Gameplay::getTryAgain() const
 	return _tryAgain;
 }
 
+bool Gameplay::getCredits() const
+{
+	return _showCredits;
+}
+
+void Gameplay::setPlayerName(std::string playerName)
+{
+	_playerName = playerName;
+}
+
 void Gameplay::tryAgain()
 {
 	_tryAgain = false;
+	_showCredits = false;
 	_isFadingOut = false;
 	_isPlayerDead = false;
+
+	_firstDeath = true;
+	_secondDeath = true;
+	_thirdDeath = true;
+	_fourthDeath = true;
+	_ending = true;
+
 	_deathScreenOpacity = 0;
 	_totalPoints = 0;
 	_lifes = 5;
@@ -250,20 +309,13 @@ void Gameplay::tryAgain()
 
 void Gameplay::gameOver()
 {
-	_totalPoints += _lifes * 100;
-	_gameFinished = true;
+	_archivoRank.grabarPlayer(PlayerScore(_playerName, _totalPoints));
 }
 
 void Gameplay::gameWin()
 {
-	_totalPoints += _lifes * 100;
-	std::cout<<"You win!"<<std::endl;
-	_gameFinished = true;
-}
-
-bool Gameplay::isGameFinished() const
-{
-	return _gameFinished;
+	_totalPoints += _lifes * 100; // Bonus points for remaining lifes
+	_archivoRank.grabarPlayer(PlayerScore(_playerName, _totalPoints));
 }
 
 sf::Vector2f Gameplay::getCameraPosition()

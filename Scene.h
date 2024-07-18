@@ -5,6 +5,9 @@
 #include "Menu.h"
 #include "Play.h"
 #include "Pause.h"
+#include "Rank.h"
+#include "Credits.h"
+#include "PlayerName.h"
 
 class Scene {
 private:
@@ -12,6 +15,10 @@ private:
 	Play* _play;
 	Pause* _pause;
 	TryAgain* _tryAgain;
+	Rank* _ranking;
+	Credits* _credits;
+	PlayerName* _playerName;
+	bool _music = true;
 public:
 	Scene(b2World& world);
 

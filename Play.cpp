@@ -6,10 +6,6 @@ Play::Play(b2World& world) : _world(world)
 	if (!_musicMenu.openFromFile("assets/sounds/levelMusic.wav"))
 		return; // error
 
-	_gameplay = nullptr;
-	_play = false;
-	_pause = false;
-
 	_musicMenu.setVolume(25.0f);
 	_musicMenu.setLoop(true);
 }
@@ -43,6 +39,16 @@ bool Play::getTryAgain()
 	return _gameplay->getTryAgain();
 }
 
+bool Play::getCredits()
+{
+	return _gameplay->getCredits();
+}
+
+void Play::setPlayerName(std::string playerName)
+{
+	_gameplay->setPlayerName(playerName);
+}
+
 bool Play::getPause() const
 {
 	return _pause;
@@ -69,9 +75,9 @@ void Play::gameOver()
 	_gameplay->gameOver();
 }
 
-bool Play::isGameFinished()
+void Play::gameWin()
 {
-	return _gameplay->isGameFinished();
+	_gameplay->gameWin();
 }
 
 void Play::open()

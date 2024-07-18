@@ -10,12 +10,25 @@
 #include "Structures.h"
 #include "Collectable.h"
 #include "TryAgain.h"
+#include "PlayerScore.h"
+#include "ArchivoRank.h"
 
 class Gameplay
 {
 private:
 	b2World& _world;
 	TiledMap* _tiledMap;
+
+	ArchivoRank _archivoRank;
+
+	sf::Sound _sound;
+	sf::SoundBuffer _buffer;
+
+	bool _firstDeath = true;
+	bool _secondDeath = true;
+	bool _thirdDeath = true;
+	bool _fourthDeath = true;
+	bool _ending = true;
 
 	int _lifes = 5;
 	sf::Texture _lifesTexture;
@@ -31,8 +44,10 @@ private:
 	Collectable* _collectables;
 	DestroyableTerrainSpawn* _destroyableTerrainSpawn;
 
-	bool _gameFinished = false;
+	std::string _playerName = "";
+
 	bool _tryAgain = false;
+	bool _showCredits = false;
 
 	sf::RectangleShape* _deathScreen;
 	int _deathScreenOpacity = 0;
@@ -51,6 +66,10 @@ public:
 	void respawn();
 
 	bool getTryAgain() const;
+
+	bool getCredits() const;
+
+	void setPlayerName(std::string playerName);
 
 	void tryAgain();
 
@@ -71,8 +90,6 @@ public:
 	void spawnDestroyableTerrains();
 
 	void spawnAll();
-
-	bool isGameFinished() const;
 
 	sf::Vector2f getCameraPosition();
 };

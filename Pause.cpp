@@ -25,6 +25,9 @@ void Pause::update(sf::Event event)
 		}
 		else if (event.key.code == sf::Keyboard::Enter) {
 			if (_pauseMenuSelection == 0) {
+				_buffer.loadFromFile("assets/sounds/smw_save_menu.wav");
+				_sound.setBuffer(_buffer);
+				_sound.play();
 				_selectedOption = 0;
 			}
 			else if (_pauseMenuSelection == 1) {

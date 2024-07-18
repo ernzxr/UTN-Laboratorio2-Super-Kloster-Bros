@@ -1,87 +1,69 @@
+#pragma once
 
-#include <cstring>
-#include <string>
-using namespace std;
 #include "Rank.h"
 
-void cargarCadena(char* pal, int tam) {
-    int i;
-    fflush(stdin);
-    for (i = 0; i < tam; i++)
-    {
-        pal[i] = cin.get();
-        if (pal[i] == '\n') break;
-    }
-    pal[i] = '\0';
-    fflush(stdin);
+Rank::Rank()
+{
+	_topTexture.loadFromFile("assets/RANKING_TOP.png");
+	_topSprite.setTexture(_topTexture);
+
+	_globalTexture.loadFromFile("assets/RANKING_GLOBAL.png");
+	_globalSprite.setTexture(_globalTexture);
 }
 
-Rank::Rank() {
-    
+void Rank::update(sf::Event event)
+{
+	if (event.type == sf::Event::KeyPressed) {
+		if (event.key.code == sf::Keyboard::Left) {
+			_rankMenuSelection = (_rankMenuSelection + 1) % 2; // Alternates between 0 and 
+		}
+		else if (event.key.code == sf::Keyboard::Right) {
+			_rankMenuSelection = (_rankMenuSelection + 1) % 2; // Alternates between 0 and 1
+		}
+		else if (event.key.code == sf::Keyboard::Escape) {
+			_selectedOption = 2;
+		}
+	}
 }
 
-bool Rank::grabarPlayer(Rank& obj) {
-    FILE* pRank;
-    pRank = fopen("Ranking.dat", "ab");
-    if (pRank == NULL) {
-        cout << "NO SE ABRIO" << endl;
-        return false;
-    }
+void Rank::render(sf::RenderWindow& window)
+{
+	sf::View currentView = window.getView();
+	sf::Vector2f centerPosition = currentView.getCenter();
 
-    bool escribio = fwrite(&obj, sizeof(Rank), 1, pRank);
-    fclose(pRank);
-
-    return escribio;
+	if (_rankMenuSelection == 0) {
+		_topSprite.setPosition(centerPosition.x - 400.0f, 0.0f);
+		window.draw(_topSprite);
+		_archivoRank.mostrarTopTen(window);
+	}
+	else if (_rankMenuSelection == 1) {
+		_globalSprite.setPosition(centerPosition.x - 400.0f, 0.0f);
+		window.draw(_globalSprite);
+	}
 }
 
-void Rank::cargarPlayer() {
-    cout << "INGRESE SU NOMBRE " << endl;
-    cargarCadena(nombrePlayer, 29);
-    grabarPlayer(*this);
+bool Rank::getRank() const
+{
+	return _inRank;
 }
 
-Rank Rank::leerPlayer(int pos) {
-    Rank obj;
-    FILE* pRank;
-    pRank = fopen("Ranking.dat", "rb");
-    if (pRank == NULL) {
-        cout << "NO SE ABRIO" << endl;
-        return obj;
-    }
-    fseek(pRank, pos * sizeof obj, SEEK_SET);
-    fread(&obj, sizeof obj, 1, pRank);
-    fclose(pRank);
-    return obj;
+void Rank::open()
+{
+	_buffer.loadFromFile("assets/sounds/ranking.wav");
+	_sound.setBuffer(_buffer);
+	_sound.play();
+	_archivoRank.ordenarRanking();
+	_rankMenuSelection = 0;
+	_selectedOption = -1;
+	_inRank = true;
 }
 
-int Rank::contarRegistros() {
-    FILE* pRank;
-    pRank = fopen("Ranking.dat", "rb");
-    if (pRank == NULL) {
-        cout << "NO SE ABRIO" << endl;
-        return -1;
-    }
-    fseek(pRank, 0, SEEK_END);
-    int tam = ftell(pRank);
-    fclose(pRank);
-    return tam / sizeof(Rank);
+void Rank::close()
+{
+	_inRank = false;
 }
 
-void Rank::mostrarRanking() {
-    Rank obj;
-    FILE* pRank;
-    
-    pRank = fopen("Ranking.dat", "rb");
-        if (pRank == NULL) {
-            cout << "NO SE ABRIO" << endl;
-            return;
-      }
- 
-    int cant = obj.contarRegistros();
-    for (int i = 0; i < cant; i++) {
-
-        fread(&obj, sizeof obj, 1, pRank);
-        cout << obj.nombrePlayer << " " << obj.puntajePlayer << " " << obj.intentos << endl;
-    }
-    fclose(pRank);
+int Rank::getSelectedOption() const
+{
+	return _selectedOption;
 }

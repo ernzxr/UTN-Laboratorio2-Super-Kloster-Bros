@@ -7,7 +7,7 @@ Menu::Menu()
 	_selectedOption = -1;
 	_inMainMenu = true;
 
-	if (!_musicMenu.openFromFile("assets/sounds/menuSong.wav"))
+	if (!_musicMenu.openFromFile("assets/sounds/menuMusic.wav"))
 		return; // error
 
 	_musicMenu.play();
@@ -35,6 +35,9 @@ void Menu::update(sf::Event event) {
 		else if (event.key.code == sf::Keyboard::Enter) {
 			if (_mainMenuSelection == 0) {
 				_selectedOption = 0;
+				_buffer.loadFromFile("assets/sounds/startGame.wav");
+				_sound.setBuffer(_buffer);
+				_sound.play();
 			}
 			else if (_mainMenuSelection == 1) {
 				_selectedOption = 1;
@@ -77,17 +80,21 @@ bool Menu::getShouldExit() const
 	return false;
 }
 
-void Menu::open() {
+void Menu::open(bool music) {
+	if (!music) {
+		_musicMenu.play();
+	}
 	_mainMenuSelection = 0;
 	_selectedOption = -1;
 	_inMainMenu = true;
-	_musicMenu.play();
 }
 
-void Menu::close()
+void Menu::close(bool music)
 {
+	if (!music) {
+		_musicMenu.stop();
+	}
 	_inMainMenu = false;
-	_musicMenu.stop();
 }
 
 int Menu::getSelectedOption() const

@@ -15,6 +15,8 @@ private:
     sf::Sprite _salirSprite;
 
     sf::Music _musicMenu;
+    sf::Sound _sound;
+    sf::SoundBuffer _buffer;
 
     int _mainMenuSelection;
     int _selectedOption;
@@ -31,9 +33,9 @@ public:
 
     bool getShouldExit() const;
 
-    void open();
+    void open(bool music = false);
 
-    void close();
+    void close(bool music = false);
 
     int getSelectedOption() const;
 };

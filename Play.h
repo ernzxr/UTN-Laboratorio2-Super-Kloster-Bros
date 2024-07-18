@@ -8,13 +8,12 @@ class Play
 {
 private:
 	b2World& _world;
-	Gameplay* _gameplay;
-
-	bool _play;
-	bool _pause;
+	Gameplay* _gameplay = nullptr;
 
 	sf::Music _musicMenu;
 
+	bool _play = false;
+	bool _pause = false;
 public:
 	Play(b2World& world);
 
@@ -28,6 +27,8 @@ public:
 
 	bool getPause() const;
 
+	void gameWin();
+
 	void newGame();
 
 	void tryAgain();
@@ -36,7 +37,9 @@ public:
 	
 	bool getTryAgain();
 
-	bool isGameFinished();
+	bool getCredits();
+
+	void setPlayerName(std::string playerName);
 
 	void createGameplay();
 
