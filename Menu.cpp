@@ -7,7 +7,7 @@ Menu::Menu()
 	_selectedOption = -1;
 	_inMainMenu = true;
 
-	if (!_musicMenu.openFromFile("assets/sounds/MenuMusic.wav"))
+	if (!_musicMenu.openFromFile("assets/sounds/menuSong.wav"))
 		return; // error
 
 	_musicMenu.play();

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="261" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="457">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="261" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="465">
  <tileset firstgid="1" source="main.tsx"/>
  <imagelayer id="4" name="Background" offsetx="-400" offsety="0">
   <image source="../assets/bg.jpg" width="1920" height="640"/>
@@ -276,9 +276,6 @@
   <object id="377" name="Star" x="1118.67" y="316">
    <point/>
   </object>
-  <object id="378" name="Star" x="992" y="128">
-   <point/>
-  </object>
   <object id="380" name="Star" x="2720" y="224">
    <point/>
   </object>
@@ -370,5 +367,13 @@
   <object id="453" name="Terrain" x="5536" y="0" width="32" height="64"/>
   <object id="455" name="Terrain" x="5568" y="32" width="512" height="32"/>
   <object id="456" name="Terrain" x="6080" y="0" width="32" height="64"/>
+  <object id="457" name="Star" x="3393" y="128.5">
+   <point/>
+  </object>
+  <object id="462" name="Terrain" x="2304" y="0" width="32" height="160"/>
+  <object id="463" name="Terrain" x="2304" y="160" width="160" height="32"/>
+  <object id="464" name="Star" x="2356" y="114">
+   <point/>
+  </object>
  </objectgroup>
 </map>

@@ -3,7 +3,7 @@
 
 Play::Play(b2World& world) : _world(world)
 {
-	if (!_musicMenu.openFromFile("assets/sounds/MenuMusic.wav"))
+	if (!_musicMenu.openFromFile("assets/sounds/levelMusic.wav"))
 		return; // error
 
 	_gameplay = nullptr;
