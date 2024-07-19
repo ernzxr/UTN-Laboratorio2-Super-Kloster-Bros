@@ -5,7 +5,6 @@ Proyecto de videojuego realizado para la promoción de la materia de Laboratorio
 * **Universidad:** Universidad Tecnológica Nacional Facultad Regional General Pacheco
 * **Cátedra:** Laboratorio de Computación II
 * **Año:** 2024 1C
-* **Calificación:** 10
 * **Integrantes:**
   * Ernesto José Riveiro
   * Facundo Chena Gil
@@ -13,4 +12,4 @@ Proyecto de videojuego realizado para la promoción de la materia de Laboratorio
 
 ## Ejecución del Programa
 
-Para ejecutar el programa, se puede abrir el proyecto con Visual Studio y compilar desde el mismo.
+Se encuentra disponible la version v1.0.0 para descargar y ejecutar.
